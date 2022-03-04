@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statue index{% endblock %}
+
+{% block body %}
+    <h1>Statue index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>En_cours</th>
+                <th>Expedition</th>
+                <th>Valider</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for statue in statues %}
+            <tr>
+                <td>{{ statue.id }}</td>
+                <td>{{ statue.enCours }}</td>
+                <td>{{ statue.expedition }}</td>
+                <td>{{ statue.valider }}</td>
+                <td>
+                    <a href="{{ path('statue_show', {'id': statue.id}) }}">show</a>
+                    <a href="{{ path('statue_edit', {'id': statue.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('statue_new') }}">Create new</a>
+{% endblock %}

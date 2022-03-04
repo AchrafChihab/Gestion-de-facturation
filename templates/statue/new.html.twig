@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Statue{% endblock %}
+
+{% block body %}
+    <h1>Create new Statue</h1>
+
+    {{ include('statue/_form.html.twig') }}
+
+    <a href="{{ path('statue_index') }}">back to list</a>
+{% endblock %}

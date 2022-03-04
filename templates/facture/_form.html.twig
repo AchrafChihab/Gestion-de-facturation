@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-8">{{ form_row(form.nom) }}</div>
+        <div class="col-md-8">{{ form_row(form.client_id) }}</div>
+        <div class="col-md-8">{{ form_row(form.statue) }}</div>
+        {# <div class="col-md-8">{{ form_row(form.lignesfacture) }}</div> #}
+    </div>
+    
+    <div class="listeligneorder">
+    <h6> Les services </h6>
+        <div class="lignesfacture_contenu col-md-8"
+            data-index="{{ form.lignesfacture|length > 0 ? form.lignesfacture|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(form.lignesfacture.vars.prototype)|e }}">
+            {# {{ dump() }} #}
+        </div>
+  
+        <button type="button" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu">
+            Ajouter une ligne
+        </button>
+    </div>
+    <div class="row"> 
+        <div class="col-md-4"> 
+            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>       
+        </div>
+        <div class="col-md-4"> 
+            <a class="btn btn-outline-primary" href="{{ path('clients_index') }}">Revenir à la liste des clients</a>    
+        </div>
+    </div>
+    {# {{ form_widget(form) }} #}
+{{ form_end(form) }}
+
+

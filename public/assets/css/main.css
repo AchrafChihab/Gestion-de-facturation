@@ -1,0 +1,59 @@
+.formulaireajoute{
+    margin: 10px;
+}
+.formulaireajoute .inputformulaire{
+    display: block;
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+.mainformulaire .formulaire{
+    margin-top: 80px;
+}
+.btncreate {
+    padding-bottom: 10px;
+}
+
+.wrapper.toggled  .page-content {
+    margin-left: 70px;
+}
+
+.btnfacture{
+    text-align: end;
+}
+
+.loginform{
+    padding-bottom:10px;
+}
+.hr{
+    border: 1px solid black;
+    margin: 20px;
+}
+
+.btnsupp{
+    padding: 0;
+}
+
+#printableArea {
+    display: none; 
+}
+
+#demostyle:disabled{
+    display: none;
+}
+
+.mb-3 legend {
+    display:none;
+    margin:0 10px;
+}
+
+@media print {
+
+    #contenuinitial{
+        display: none;
+    }
+    #printableArea {
+         display: block; 
+    }
+  }

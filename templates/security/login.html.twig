@@ -1,0 +1,45 @@
+{% extends 'home.html.twig' %} {% block title %}Log in!{% endblock %} {% block body %}
+<div class="formulaire">
+    <div class="row">
+    <div class="col-xl-6 mx-auto">
+        <div class="card">
+        <div class="card-body">
+            <div class="border p-3 rounded">
+            <h6 class="mb-0 text-uppercase loginform">Login form</h6>
+            <div class="hr"></div>
+            <div class="col-12">
+                {% if error %}
+                <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+                {% endif %} {% if app.user %}
+                <div class="mb-3">
+                You are logged in as {{ app.user.username }},
+                <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+                {% endif %}
+            </div>
+            <form method="post" class="row g-3">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                <div class="col-12">
+                <label class="form-label">Email ID</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus />
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required/>
+                </div>
+
+                <div class="col-12">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

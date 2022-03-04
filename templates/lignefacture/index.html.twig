@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lignefacture index{% endblock %}
+
+{% block body %}
+    <h1>Lignefacture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Qte</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lignefacture in lignefactures %}
+            <tr>
+                <td>{{ lignefacture.id }}</td>
+                <td>{{ lignefacture.qte }}</td>
+                <td>{{ lignefacture.prix }}</td>
+                <td>
+                    <a href="{{ path('lignefacture_show', {'id': lignefacture.id}) }}">show</a>
+                    <a href="{{ path('lignefacture_edit', {'id': lignefacture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('lignefacture_new') }}">Create new</a>
+{% endblock %}

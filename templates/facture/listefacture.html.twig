@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+
+{% block body %}
+
+
+<div class="card">
+<div class="card-header py-3"> 
+    <div class="row g-3 align-items-center">
+        <div class="col-12 col-lg-6 col-md-6 me-auto">
+            <h4> Liste facture du client {{ client_selected }} </h4>
+        </div>
+
+
+    </div>
+</div>
+<div class="card-body">
+    <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
+        <div class="col">
+            <div class="card border shadow-none radius-10">
+            <div class="card-body">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon-box bg-light-primary border-0">
+                <i class="bi bi-person text-primary"></i>
+                </div>
+                <div class="info">
+                    <h6 class="mb-2">Le client</h6>
+                    <p class="mb-1">Raison social : {{ client_selected }}</p>
+                    {# <p class="mb-1">Adresse :  {{ client_selected.adresse }}</p> #}
+                    {# <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p> #}
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+        {# <div class="col">
+        <div class="card border shadow-none radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="icon-box bg-light-success border-0">
+                    <i class="bi bi-truck text-success"></i>
+                    </div>
+                    <div class="info">
+                        <h6 class="mb-2">Order info</h6>
+                        <p class="mb-1"><strong>Shipping</strong> : Red Express</p>
+                        <p class="mb-1"><strong>Pay Method</strong> : Master Card</p>
+                        <p class="mb-1"><strong>Status</strong> : New</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div> #}
+    </div>
+    <!--end row-->
+
+    <div class="row">
+        {# <div class="col-12 col-lg-6">
+            <div class="loginform"> 
+                <a class="btn btn-outline-success " href="{{ path('facture_new') }}?client={{client_selected.id}}">Ajouter facture </a>
+            </div>
+            <div class="card border shadow-none radius-10">
+            <div class="card-body">
+                {{ include('facture/_form.html.twig') }}
+            </div>
+            </div>
+        </div> #}
+        <div class="col-12 col-lg-12">
+            <div class="loginform"> 
+                <a class="btn btn-outline-success " href="{{ path('facture_new') }}?client={{ client_selected.id }}">Ajouter facture </a>
+            </div>
+            <div class="card border shadow-none radius-10">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                            <th>Nom facture </th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for facture in liste_facture %}
+                                <tr> 
+                                    <td>{{ facture.nom }}</td>
+                                    <td>
+                                        {# <a href="{{ path('facture_show', {'id': facture.id}) }}">show</a> #}
+                                        <a class="text-success p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Details facture" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}?client={{client_selected.id}}"><i class="bi bi-file-text"></i></a>
+                                        <a class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">il y a aucun facture dans votre table </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+        {# <div class="col-12 col-lg-4">
+            <div class="card border shadow-none bg-light radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <div>
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="ms-auto">
+                    <button type="button" class="btn alert-success radius-30 px-4">Confirmed</button>
+                    </div>
+                </div>
+                    <div class="d-flex align-items-center mb-3">
+                    <div>
+                        <p class="mb-0">Subtotal</p>
+                    </div>
+                    <div class="ms-auto">
+                        <h5 class="mb-0">$198.00</h5>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div>
+                    <p class="mb-0">Shipping Price</p>
+                    </div>
+                    <div class="ms-auto">
+                    <h5 class="mb-0">$0.00</h5>
+                </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div>
+                    <p class="mb-0">Taxes</p>
+                    </div>
+                    <div class="ms-auto">
+                    <h5 class="mb-0">$24.00</h5>
+                </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                <div>
+                    <p class="mb-0">Payment Fee</p>
+                </div>
+                <div class="ms-auto">
+                    <h5 class="mb-0">$14.00</h5>
+                </div>
+            </div>
+                <div class="d-flex align-items-center mb-3">
+                <div>
+                    <p class="mb-0">Discount</p>
+                </div>
+                <div class="ms-auto">
+                    <h5 class="mb-0 text-danger">-$36.00</h5>
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="card border shadow-none bg-warning radius-10">
+            <div class="card-body">
+                <h5>Payment info</h5>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="fs-1">
+                        <i class="bi bi-credit-card-2-back-fill"></i>
+                    </div>
+                    <div class="">
+                        <p class="mb-0 fs-6">Master Card **** **** 8956 </p>
+                    </div>
+                </div>
+                <p>Business name: Template Market LLP <br>
+                    Phone: +91-9910XXXXXX
+                </p>
+            </div>
+            </div>
+
+
+        </div> #}
+    </div><!--end row-->
+</div>
+</div>
+
+    
+    {# <table class="table">
+        <thead>
+            <tr> 
+                <th>Service</th>
+                <th>Qte</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture in liste_facture %}
+            <tr> 
+                <td>{{ facture.service }}</td>
+                <td>{{ facture.qte }}</td>
+                <td>{{ facture.prix }}</td>
+                <td>
+                    <a href="{{ path('facture_show', {'id': facture.id}) }}">show</a>
+                    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+
+   
+{% endblock %}

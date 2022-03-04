@@ -1,0 +1,102 @@
+{% block asidemenu %}
+<!--start sidebar -->
+    <div class="asidemenu">
+        <aside class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+
+                </div>
+            <div>
+                <h4 class="logo-text ">Facturation</h4>
+            </div>
+            <div class="toggle-icon ms-auto"><i class="bi bi-list"></i>
+            </div>
+            </div>
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li class="menu-label">Menu</li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="menu-title">Dashbord</div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{path('clients_index')}}"><i class="bi bi-person-lines-fill"></i>Liste des clients</a>
+                    </li>
+                    <li> <a href="{{ path('clients_new') }}"><i class="bi bi-person-plus-fill"></i>Ajouter un client</a>
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="menu-title">Client</div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{path('clients_index')}}"><i class="bi bi-person-lines-fill"></i>Liste des clients</a>
+                    </li>
+                    <li> <a href="{{ path('clients_new') }}"><i class="bi bi-person-plus-fill"></i>Ajouter un client</a>
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-file-text"></i>
+                    </div>
+                    <div class="menu-title">Devis </div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{ path('devis_index') }}"><i class="bi bi-files"></i>Liste des devis</a>
+                    </li>
+                    <li> <a href="{{ path('devis_new') }}"><i class="bi bi-file-plus"></i>Ajouter un devis</a>
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-file-text"></i>
+                    </div>
+                    <div class="menu-title">Gestion de commande</div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{ path('commande_index') }}"><i class="bi bi-files"></i>Les commandes</a>
+                    </li>
+                    <li> <a href="{{ path('commande_new') }}"><i class="bi bi-file-plus"></i>Ajouter une commande</a>
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-file-text"></i>
+                    </div>
+                    <div class="menu-title">facture </div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{ path('facture_index') }}"><i class="bi bi-files"></i>Liste des facture</a>
+                    </li>
+                    <li> <a href="{{ path('facture_new') }}"><i class="bi bi-file-plus"></i>Ajouter un facture</a>
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-gear"></i>
+                    </div>
+                    <div class="menu-title">Service </div>
+                    </a>
+                    <ul>
+                    <li> <a href="{{ path('service_index') }}"><i class="bi bi-sliders"></i>Liste des service</a>
+                    </li>
+                    <li> <a href="{{ path('service_new') }}"><i class="bi bi-file-plus"></i>Ajouter un service</a>
+                    </li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!--end navigation-->
+        </aside>
+    </div>
+<!--end sidebar -->
+{% endblock %}

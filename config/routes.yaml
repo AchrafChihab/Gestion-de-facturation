@@ -1,0 +1,18 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+client:
+   path: /Client
+   controller: App\Controller\ClientsController::index
+cliente:
+   path: /Cliente
+   controller: App\Controller\ClientController::index
+facture:
+   path: /devis
+   controller: App\Controller\FactureController::index
+service:
+   path: /service
+   controller: App\Controller\ServiceController::index
+lignefacture:
+   path: /lignefacture
+   controller: App\Controller\LignefactureController::index

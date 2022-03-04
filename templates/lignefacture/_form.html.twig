@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+        <div class="col-md-3">{{ form_row(form.qte) }}</div>
+        <div class="col-md-3">{{ form_row(form.prix) }}</div>
+        <div class="col-md-3">{{ form_row(form.service) }}</div>  
+    {# {{ form_widget(form) }} #}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,9 @@
+   {% for service in services %}
+            <option value="{{ service.id }}">
+               {{ service.nom }}
+            </option>
+        {% else %}
+            <option value="">
+               
+            </option>
+        {% endfor %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block body %}
+    <h1>Clients</h1>
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">{{ client.nom }} </h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                    <div class="card-header">
+                        <h6 class="mb-0">CONTACT INFORMATION</h6>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label">Adresse</label>
+                            <input type="text" class="form-control"  value="{{ client.adress }}">
+                            </div>
+                            <div class="col-6">
+                            <label class="form-label">Pays</label>
+                            <input type="text" class="form-control" value="{{ client.pays }}">
+                            </div>
+                            <div class="col-6">
+                            <label class="form-label">ICE</label>
+                            <input type="text" class="form-control" value="{{ client.ice }}">
+                        </div>
+                            <div class="col-6">
+                            <label class="form-label">Téléphone</label>
+                            <input type="text" class="form-control" value="{{ client.telephone }}">
+                        </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card shadow-sm border-0 overflow-hidden">
+                <div class="card-body">
+                    <div class="profile-avatar text-center">
+                    <img src="assets/images/avatars/avatar-1.png" class="rounded-circle shadow" width="120" height="120" alt="">
+                    </div>
+                    <div class="text-center mt-4">
+                    <h4 class="mb-1">{{ client.nom }}</h4>
+                    <p class="mb-0 text-secondary">{{ client.ville }}, {{ client.pays }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end row-->
+    {# <div class="card">
+        <div class="card-header py-3"> 
+            <div class="row g-3 align-items-center">
+                <div class="col-12 col-lg-6 col-md-6 me-auto">
+                    <h4> Liste devis du client {{ client.nom }} </h4>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
+                <div class="col">
+                    <div class="card border shadow-none radius-10">
+                    <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="icon-box bg-light-primary border-0">
+                        <i class="bi bi-person text-primary"></i>
+                        </div>
+                        <div class="info">
+                            <h6 class="mb-2" >{{ client.nom }}</h6>
+                            <p class="mb-1">Raison social : {{ client.nom }}</p>
+                            <p class="mb-1">Adresse : {{ client.adress }}</p>
+                            <p class="mb-1">ICE : {{ client.ice }}</p>
+                            <p class="mb-1">Numero telephone : {{ client.telephone }}</p>
+                            <a class="btn btn-outline-primary" href="{{ path('clients_index') }}">List clients</a>
+                            <a class="btn btn-outline-primary" href="{{ path('clients_edit', {'id': client.id}) }}">editer</a>
+                            <a class="btn btnsupp">{{ include('clients/_delete_form.html.twig') }}</a> 
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end row-->
+        </div>
+    </div> #}
+{% endblock %}

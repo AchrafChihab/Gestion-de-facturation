@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un devis{% endblock %}
+{% macro niceForme(form) %}
+        <div class="row itemservice">
+            <div class="col-md-5">
+            {{ form_row(form.service) }}
+            </div>
+            <div class="col-md-1">
+             <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    +
+                </button>
+            </div>
+            <div class="col-md-2">
+                {{ form_row(form.qte) }}
+            </div>
+            <div class="col-md-2">
+            {{ form_row(form.prix) }}
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger btn-remove"  type="button">Supprimer</button>
+            </div>
+        </div>
+{% endmacro niceForme %}
+{% import _self as formMacros %}
+
+{% block body %}
+    <h1>Créer un devis</h1>
+    {{ form_start(form) }}
+    <div class="row">
+        {# <div class="col-md-8">{{ form_row(form.nom) }}</div> #}
+        <div class="col-md-8">{{ form_row(form.client) }}</div>
+        <div class="col-md-8">{{ form_row(form.statue) }}</div>
+        {# <div class="col-md-8">{{ form_row(form.lignesfacture) }}</div> #}
+    </div>    
+    <div class="listeligneorder">
+        <h6> Les services </h6>
+        <div class="lignesfacture_contenu col-md-12"
+            data-index="{{ form.lignedevis|length > 0 ? form.lignedevis|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ formMacros.niceForme(form.lignedevis.vars.prototype)|e }}">
+           
+        </div>  
+        <button type="button" class="btn btn-outline-primary mb-2 add_item_link" data-collection-holder-class="lignesfacture_contenu">
+            Ajouter une ligne
+        </button>
+    </div>
+    <div class="row"> 
+        <div class="col-md-4"> 
+            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>       
+        </div>
+        <div class="col-md-4"> 
+            <a class="btn btn-outline-primary" href="{{ path('clients_index') }}">Revenir à la liste des clients</a>    
+        </div>
+    </div>
+    {# {{ form_widget(form) }} #}
+{{ form_end(form) }}    
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau service</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {{ render(url('service_new_ajax')) }}
+    </div>
+    <div class="modal-footer text-left">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+    </div>
+    </div>
+</div>
+</div>
+<script>
+    
+
+  $(document).ready(function () 
+  {
+    $("#serviceform").submit(function (event)
+    {
+      
+    event.preventDefault();
+    var formSerialize = $(this).serialize();
+   
+      $.ajax({
+                url:"{{ path('service_new_ajax') }}",
+                type: "POST",
+                dataType: "json",
+                data: formSerialize,
+                async: true,
+                encode: true,
+                success: function (data) {
+                console.log(data);
+                },
+                complete(xhr,status)
+                {
+                    $.ajax({
+                        url:"{{ path('service_allservice') }}",
+                        type: "POST",
+                        async: true,
+                        encode: true,
+                        success: function (newlistservice)
+                        {                            
+                            $( ".choise_service" ).each(function( index ) {
+                                //$(this).html(newlistservice);
+                                 $(this).append(newlistservice);
+                            }); 
+                        }
+                    });
+                    $('#exampleModal').modal('hide');
+                    $('.choise_service').lastchild('.choise_service');
+
+                }
+            });
+        });
+  });
+</script>
+{% endblock %}
+

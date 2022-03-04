@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+{% block stylesheetsnew %}
+{% endblock %}
+
+{% block body %}
+
+
+   <h1> Liste devis </h1> 
+    <a class="btn btn-outline-primary mb-2" href="{{ path('facture_new') }}">Ajouter devis </a>
+    <table id="table2" class="table table-striped table-bordered">
+        <thead>
+            <tr> 
+                <th>Service</th>
+                <th>client</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for de in devis %}
+            <tr> 
+                <td>{{ de.nom }}</td>
+                <td>{{ de.client.nom }}</td>
+
+                <td>
+                    <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('devis_show', {'id': de.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                    <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('devis_edit', {'id': de.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                    {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">il y a aucun devis dans votre table </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+
+
+{% endblock %}

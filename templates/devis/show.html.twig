@@ -1,0 +1,363 @@
+ {% extends 'base.html.twig' %}
+
+{% block title %}devi index{% endblock %}
+{% block stylesheetsnew %}<link rel="stylesheet" href="{{asset('assets/css/main.css')}}" type="text/css" media="print" />{% endblock %}
+
+{% block body %}
+
+
+{% set client_selected = devi.client %}
+<div id="contenuinitial" class="contenuinitial">
+    <div class="card">
+        <div class="card-header py-3"> 
+            <div class="row g-3 align-items-center">
+                <div class="col-12 col-lg-12 col-md-12 me-auto">
+                    {% if app.request.get('sts') %}
+                        <div class="alert alert-success" id="notifmail">
+                            Votre e-mail a ete bien envoyé à {{ client_selected.mail }}
+                        </div>
+                    {% endif %}
+                    <form>
+                        <a class="btn btn-primary" type="button" onclick="printDiv('printableArea')" value="print a div!" >Imprimer cette page</a>
+                        <a class="btn btn-outline-primary" href="{{ path('download_file', {'id': devi.id}) }}">telecharger cette page</a>
+                        <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('senddevismail', {'id': devi.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
+                        <a class="btn btn-outline-primary" id='commande'  href="{{ path('convertcommande', {'id': devi.id}) }}?idclient={{ client_selected.id }}">convertire en commande</a>
+                    </form>
+                </div> 
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <h6> </h6>
+            </div>
+            <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
+                <div class="col">
+                    <div class="card border shadow-none radius-10">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-box bg-light-primary border-0">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div class="info">
+                                    <h6 class="mb-2">Le client {{ client_selected.nom  }} </h6> 
+                                    <p class="mb-1">Adresse :  {{ client_selected.adress  }}</p>
+                                    <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                <div class="card border shadow-none radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="icon-box bg-light-success border-0">
+                                <i class="bi bi-truck text-success"></i>
+                            </div>
+                            <div class="info">
+                                <h6 class="mb-2">Order information</h6>
+                                <p class="mb-1"><strong>Référence devi</strong> : {{ devi.nom }}</p>
+                                <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
+                                <p class="mb-1"><strong>Status</strong> : {{ devi.statue }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+
+            
+
+
+            <div class="row">
+    
+                <div class="col-12 col-lg-8">
+                    <div class="loginform"> 
+                        {# <a class="btn btn-outline-success " href="{{ path('devi_new') }}?client={{client_selected.id}}">Ajouter devi </a> #}
+                    </div>
+                    <div class="card border shadow-none radius-10">
+                        <div class="card-body">
+                     
+                            <div class="table-responsive">
+                                <table class="table align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                        <th>Nom service </th>
+                                        <th>prix </th>
+                                        <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% set total = 0   %} 
+                                        {% for lignedevi in devi.lignedevis %}
+                                            <tr> 
+                                                <td>{{ lignedevi.service }}</td>
+                                                <td>{{ lignedevi.prix }}</td>
+                                                <td>
+                                                    {# <a href="{{ path('devi_show', {'id': devi.id}) }}">show</a> #}
+                                                    <a class="text-success p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Details devi" aria-label="Views" href="{{ path('devis_show', {'id': lignedevi.id }) }}"><i class="bi bi-file-text"></i></a>
+                                                    <a class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('devis_edit', {'id': lignedevi.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                                                </td>
+                                            </tr>   
+                                            
+                                            
+                                                {% set  total = total +  lignedevi.prix %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                                {% set  taxes = (total * 20) / 100  %}
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-end">total</td>
+                                            <td >{{ total }}</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="card border shadow-none bg-light radius-10">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-4">
+                                <div>
+                                    <h5 class="mb-0">Le devis</h5>
+                                </div>
+                                <div class="ms-auto">
+                                    <button type="button" class="btn alert-success radius-30 px-4">{{ devi.statue }}</button>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <p class="mb-0">total Net </p>
+                                </div>
+                                <div class="ms-auto">
+                                    <h5 class="mb-0">{{ total }} Dhs</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <p class="mb-0">Taxes </p>
+                                </div>
+                                <div class="ms-auto">
+                                    <h5 class="mb-0">{{ taxes }} Dhs</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <p class="mb-0">total </p>
+                                </div>
+                                <div class="ms-auto">
+                                    <h5 class="mb-0">{{ total + taxes }} Dhs</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {# <div class="card border shadow-none bg-warning radius-10">
+                <div class="card-body">
+                    <h5>Payment info</h5>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fs-1">
+                            <i class="bi bi-credit-card-2-back-fill"></i>
+                        </div>
+                        <div class="">
+                            <p class="mb-0 fs-6">Master Card **** **** 8956 </p>
+                        </div>
+                    </div>
+                    <p>Business name: Template Market LLP <br>
+                        Phone: +91-9910XXXXXX
+                    </p>
+                </div>
+            </div> #}
+        </div>
+    </div>
+</div>
+<!--end row-->
+{# <table class="table">
+    <thead>
+        <tr> 
+            <th>Service</th>
+            <th>Qte</th>
+            <th>Prix</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for devi in liste_devi %}
+        <tr> 
+            <td>{{ devi.service }}</td>
+            <td>{{ devi.qte }}</td>
+            <td>{{ devi.prix }}</td>
+            <td>
+                <a href="{{ path('devi_show', {'id': devi.id}) }}">show</a>
+                <a href="{{ path('devi_edit', {'id': devi.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>  #}
+<div id="printableArea" class="impression">
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
+            <div class="col">
+                <div class="card border shadow-none radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="icon-box bg-light-primary border-0">
+                                <i class="bi bi-person text-primary"></i>
+                            </div>
+                            <div class="info">
+                                <h6 class="mb-2">Le client {{ client_selected.nom  }}</h6>
+                                <p class="mb-1">Adresse :  {{ client_selected.adress  }}</p>
+                                <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+            <div class="card border shadow-none radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="icon-box bg-light-success border-0">
+                            <i class="bi bi-truck text-success"></i>
+                        </div>
+                        <div class="info">
+                            <h6 class="mb-2">Order information</h6>
+                            <p class="mb-1"><strong>Référence devi</strong> : {{ devi.nom }}</p>
+                            <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
+                            <p class="mb-1"><strong>Statue</strong> : {{ devi.statue }}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+
+        <div class="row">
+
+            <div class="col-12 col-lg-8">
+                <div class="loginform"> 
+                    {# <a class="btn btn-outline-success " href="{{ path('devi_new') }}?client={{client_selected.id}}">Ajouter devi </a> #}
+                </div>
+                <div class="card border shadow-none radius-10">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Nom service </th>
+                                        <th>prix </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% set total = 0  %}
+                                    {% for lignedevi in devi.lignedevis %}
+                                        <tr> 
+                                            <td>{{ lignedevi.service }}</td>
+                                            <td>{{ lignedevi.prix }}</td>
+                                        </tr>
+                                        
+                                            {% set  total = total +  lignedevi.prix %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">il y a aucun devi dans votre table </td>
+                                        </tr>
+                                    {% endfor %}
+                                            {% set  taxes = (total * 20) / 100  %}
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" class="text-end">total</td>
+                                        <td >{{ total }}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="card border shadow-none bg-light radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-4">
+                            <div>
+                                <h5 class="mb-0">Le devi</h5>
+                            </div>
+                            <div class="ms-auto">
+                                <button type="button" class="btn alert-success radius-30 px-4">{{ devi.statue }}</button>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <p class="mb-0">total Net </p>
+                            </div>
+                            <div class="ms-auto">
+                                <h5 class="mb-0">{{ total }} Dhs</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <p class="mb-0">Taxes </p>
+                            </div>
+                            <div class="ms-auto">
+                                <h5 class="mb-0">{{ taxes }} Dhs</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <p class="mb-0">total </p>
+                            </div>
+                            <div class="ms-auto">
+                                <h5 class="mb-0">{{ total + taxes }} Dhs</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+    <script type="text/javascript">
+    function printDiv(impression) {
+     var printContents = document.getElementById(impression).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+    }
+
+//////////////////////////////////////////////////////////    
+    $(document).ready(function(){
+        var elementExists = document.getElementById("notifmail");
+        if(elementExists){
+            timeoutID = window.setTimeout(removeAlert, 5000);
+            document.getElementById("sendemail").classList.add("disabled");
+        }
+    });
+    function removeAlert(){
+        document.getElementById("notifmail").remove();
+        document.getElementById("sendemail").classList.remove("disabled");
+        URLSearchParams.delete('sts');      
+    }
+    
+
+    </script>
+{% endblock %}
+{% endblock %}

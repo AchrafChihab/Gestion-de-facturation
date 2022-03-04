@@ -1,0 +1,13 @@
+
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-8">{{ form_row(form.nom) }}</div>
+        <div class="col-md-8">{{ form_row(form.ice) }}</div>
+        <div class="col-md-8">{{ form_row(form.pays) }}</div>
+        <div class="col-md-8">{{ form_row(form.ville) }}</div>
+        <div class="col-md-8">{{ form_row(form.telephone) }}</div>
+        <div class="col-md-8">{{ form_row(form.adress) }}</div>
+    </div>
+    <button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>    
+    <a class="btn btn-outline-primary" href="{{ path('clients_index') }}">back to list</a>
+{{ form_end(form) }}
