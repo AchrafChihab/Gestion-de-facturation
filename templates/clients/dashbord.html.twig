@@ -1,0 +1,228 @@
+ {% extends 'base.html.twig' %}
+
+ {% block body %}
+
+            <h6 class="mb-0 text-uppercase">Interface</h6>
+            <hr>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-4">
+              <div class="col">
+                <div class="card radius-10 border-0 border-start border-tiffany border-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Total clients </p>
+                        <h4 class="mb-0 text-tiffany">{{ clientnumber }}</h4>
+                      </div>
+                      <div class="ms-auto widget-icon bg-tiffany text-white">
+                        <i class="bi bi-bag-check-fill"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10 border-0 border-start border-success border-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Total Revenue</p>
+                        <h4 class="mb-0 text-success">{{ totalrevenue }} Dhs</h4>
+                      </div>
+                      <div class="ms-auto widget-icon bg-success text-white">
+                        <i class="bi bi-currency-dollar"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10 border-0 border-start border-orange border-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">New Users</p>
+                        <h4 class="mb-0 text-orange">214</h4>
+                      </div>
+                      <div class="ms-auto widget-icon bg-orange text-white">
+                        <i class="bi bi-person-plus-fill"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+                <div class="col">
+                    <div class="card radius-10 border-0 border-start border-pink border-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                            <div class="">
+                                <p class="mb-1">Tickets</p>
+                                <h4 class="mb-0 text-success">24.25</h4>
+                            </div>
+                            <div class="ms-auto widget-icon bg-pink text-white">
+                                <i class="bi bi-bar-chart-fill"></i>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               {# <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Total Orders</p>
+                        <h4 class="mb-0 text-pink">542</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-pink">
+                        <i class="bi bi-cup"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Total Income</p>
+                        <h4 class="mb-0 text-info">$875</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-info">
+                        <i class="bi bi-wallet"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Comments</p>
+                        <h4 class="mb-0 text-purple">59</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-purple">
+                        <i class="bi bi-chat-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Tickets</p>
+                        <h4 class="mb-0 text-primary">145</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-primary">
+                        <i class="bi bi-truck"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Notifications</p>
+                        <h4 class="mb-0 text-primary">145</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-primary">
+                        <i class="bi bi-bell"></i>
+                      </div>
+                    </div>
+                    <hr class="my-2">
+                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>+12.3% from last week</span></small>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Total Posts</p>
+                        <h4 class="mb-0 text-danger">249</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-danger">
+                        <i class="bi bi-pencil"></i>
+                      </div>
+                    </div>
+                    <hr class="my-2">
+                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>+10.5% from last week</span></small>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Messages</p>
+                        <h4 class="mb-0 text-success">845</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-success">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                    </div>
+                    <hr class="my-2">
+                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>+15.8% from last week</span></small>
+                  </div>
+                </div>
+               </div>
+               <div class="col">
+                <div class="card radius-10">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="">
+                        <p class="mb-1">Articles</p>
+                        <h4 class="mb-0 text-orange">645</h4>
+                      </div>
+                      <div class="ms-auto fs-2 text-orange">
+                        <i class="bi bi-book"></i>
+                      </div>
+                    </div>
+                    <hr class="my-2">
+                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>+16.5% from last week</span></small>
+                  </div>
+                </div>
+               </div> #}
+            </div><!--end row-->
+
+            <h6 class="mb-0 text-uppercase">Les factures recentes</h6>
+            <hr>
+            <table id="table2" class="table table-striped table-bordered">
+                <thead>
+                    <tr> 
+                        <th>Service</th>
+                        <th>client</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for facture in factures %}
+                    <tr> 
+                        <td>{{ facture.nom }}</td>
+                        <td>{{ facture.client.nom }}</td>
+
+                        <td>
+                            <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                            <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                            {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">il y a aucun devis dans votre table </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+ {% endblock %}

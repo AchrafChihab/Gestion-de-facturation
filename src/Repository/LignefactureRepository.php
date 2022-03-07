@@ -29,6 +29,14 @@ class LignefactureRepository extends ServiceEntityRepository
                    ->getResult();
     }
 
+    public function Sommeligne()
+    {
+        return $this->createQueryBuilder('L')  
+            ->select('SUM(L.prix) as totalligne')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Lignefacture[] Returns an array of Lignefacture objects
     //  */
