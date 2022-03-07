@@ -6,8 +6,10 @@ use App\Entity\Clients;
 use App\Entity\Facture;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
+use App\Repository\FactureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\LignefactureRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +20,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class ClientsController extends AbstractController
 {
+    /**
+     * @Route("/dashbord", name="dashbord", methods={"GET"})
+     */
+    public function dashbord(LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,ClientsRepository $clientsRepository): Response
+    {
+        $totalrevenue = $lignefactureRepository->Sommeligne();
+        $client = $clientsRepository->findAll();        
+        $clientnumber = count($client);
+        return $this->render('clients/dashbord.html.twig', [
+            'clients'       => $clientsRepository->findAll(),
+            'factures'      => $factureRepository->findAll(),
+            'clientnumber'  =>$clientnumber,
+            'totalrevenue'  => $totalrevenue
+        ]);
+    }
     /**
      * @Route("/client", name="clients_index", methods={"GET"})
      */
