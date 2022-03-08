@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Devis;
 use App\Entity\Clients;
 use App\Form\DevisType;
@@ -64,6 +65,11 @@ class DevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($devi);
+            $dateTimeNow = new DateTime('now');
+
+        if ($devi->getCreatedAt() === null) {
+            $devi->setCreatedAt($dateTimeNow);
+        }
             $entityManager->flush();
 
             return $this->redirectToRoute('devis_index', [], Response::HTTP_SEE_OTHER);
@@ -94,6 +100,8 @@ class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dateTimeNow = new DateTime('now');
+            $devi->setUpdatedAt($dateTimeNow);
             $entityManager->flush();
 
             return $this->redirectToRoute('devis_index', [], Response::HTTP_SEE_OTHER);

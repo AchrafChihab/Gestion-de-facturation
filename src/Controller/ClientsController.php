@@ -70,10 +70,18 @@ class ClientsController extends AbstractController
     /**
      * @Route("/{id}", name="clients_show", methods={"GET"})
      */
-    public function show(Clients $client): Response
+    public function show($id,LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,Clients $client): Response
     {
+        $factures = $factureRepository->Findbyone($id);
+        $facturepayer = $factureRepository->getCountFactureBy($id,'valider');
+        $totalfactureclient = $lignefactureRepository->SommeTotallignefactureDuClient($id);
+        $clientnumber = count($factures);
         return $this->render('clients/show.html.twig', [
             'client' => $client,
+            'factures' => $factures,
+            'clientnumber' => $clientnumber,
+            'facturepayer' => $facturepayer,
+            'totalfactureclient' => $totalfactureclient,
         ]);
     }
     

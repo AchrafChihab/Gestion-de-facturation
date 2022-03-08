@@ -36,6 +36,16 @@ class LignefactureRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+    public function SommeTotallignefactureDuClient($id)
+    {
+        return $this->createQueryBuilder('L')
+            ->Join('L.facture', 'F')        
+            ->AndWhere('F.client = :id')            
+            ->setParameter('id', $id)
+            ->select('SUM(L.prix) as totalrevenue')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
     // /**
     //  * @return Lignefacture[] Returns an array of Lignefacture objects

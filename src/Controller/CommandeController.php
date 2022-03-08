@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Devis;
 use App\Entity\Facture;
 use App\Entity\Commande;
 use App\Form\CommandeType;
@@ -37,7 +38,7 @@ class CommandeController extends AbstractController
         $idclient =  $request->query->get('idclient');
         $facture_selected =  $entityManager->getRepository(Devis::class)->findOneBy(array('id' => $id));
          
-        $cloneorder = $facture_selected->convertdevi();  
+        $cloneorder = $facture_selected->convertcommande();  
         $em->persist($cloneorder);
         $em->flush(); 
         return $this->redirectToRoute('commande_show', ['id'=>$cloneorder->getId()]); 
