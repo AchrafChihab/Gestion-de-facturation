@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220303111509 extends AbstractMigration
+final class Version20220308155846 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,14 @@ final class Version20220303111509 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE facture ADD CONSTRAINT FK_FE86641019EB6921 FOREIGN KEY (client_id) REFERENCES clients (id)');
-        $this->addSql('CREATE INDEX IDX_FE86641019EB6921 ON facture (client_id)');
+        $this->addSql('ALTER TABLE commande ADD created_at DATETIME NOT NULL, ADD updated_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE facture ADD created_at DATETIME NOT NULL, ADD updated_at DATETIME NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE facture DROP FOREIGN KEY FK_FE86641019EB6921');
-        $this->addSql('DROP INDEX IDX_FE86641019EB6921 ON facture');
+        $this->addSql('ALTER TABLE commande DROP created_at, DROP updated_at');
+        $this->addSql('ALTER TABLE facture DROP created_at, DROP updated_at');
     }
 }

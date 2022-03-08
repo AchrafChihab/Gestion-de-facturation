@@ -26,8 +26,18 @@ class FactureRepository extends ServiceEntityRepository
     public function Findbyone($client)
     {
         return $this->createQueryBuilder('f')
-            ->LeftJoin('f.client_id','c')
-            ->Where('f.client_id = :id')
+            ->LeftJoin('f.client','c')
+            ->Where('f.client = :id')
+            ->setParameter('id', $client)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function totalfactureclient($client)
+    {
+        return $this->createQueryBuilder('f')
+            ->LeftJoin('f.client','c')
+            ->Where('f.client = :id')
             ->setParameter('id', $client)
             ->getQuery()
             ->getResult()
@@ -43,6 +53,24 @@ class FactureRepository extends ServiceEntityRepository
         $qb->select($qb->expr()->max('entity.nom'));
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function getCountFactureBy($clientid,$statue_nom){
+
+  
+
+        return $this->createQueryBuilder('f')
+            ->select('count(f.id)')
+            ->Join('f.client','c')
+            ->Join('f.statue','s')
+            ->Where('f.client = c')
+            ->AndWhere('c.id = :clientid')
+            ->AndWhere('s.nom = :statue_nom')
+            ->setParameters(['clientid' => $clientid,'statue_nom' => $statue_nom])
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
     }
 
 

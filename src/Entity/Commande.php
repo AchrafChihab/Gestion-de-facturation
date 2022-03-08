@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\Statue;
 use App\Entity\Clients;
 use App\Entity\Facture;
@@ -42,6 +43,20 @@ class Commande
      * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="commande",cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $lignecommandes;
+
+        /**
+     * @var DateTime $created
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+    /**
+     * @var DateTime $updated
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    protected $updatedAt;
 
     public function __construct()
     {  
@@ -138,6 +153,30 @@ class Commande
         }
         return $facture;
         
+    }
+
+    public function getCreatedAt() :?DateTime
+    {
+        return $this->createdAt;
+    }
+    
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt() :?DateTime
+    {
+        return $this->updatedAt;
+    }
+    
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
  
  

@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\DevisRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Outil\Outil;
+
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use App\Repository\DevisRepository;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=DevisRepository::class)
@@ -40,9 +46,27 @@ class Devis
      */
     private $lignedevis;
 
+    /**
+     * @var DateTime $created
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+    /**
+     * @var DateTime $updated
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    protected $updatedAt;
+
     public function __construct()
     {
         $this->lignedevis = new ArrayCollection();
+    }
+
+    public function __toString(){
+        return $this->nom;
     }
 
     public function getId(): ?int
@@ -135,4 +159,33 @@ class Devis
         return $commande;
         
     }
+    public function getCreatedAt() :?DateTime
+    {
+        return $this->createdAt;
+    }
+    
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt() :?DateTime
+    {
+        return $this->updatedAt;
+    }
+    
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDateFormat(){
+        return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));
+    }
+
+
 }
