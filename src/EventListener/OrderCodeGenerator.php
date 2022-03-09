@@ -30,7 +30,7 @@ class OrderCodeGenerator
 
             $now     = new \DateTime();
             $year    = $now->format('Y');
-            $prefix  = '';
+            $prefix  = '#';
 
             $em = $args->getEntityManager();  
             $maxCode = $em->getRepository(Facture::class)->findMaxCode($year, $prefix);

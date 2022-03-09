@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use App\Outil\Outil;
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
 use Doctrine\ORM\Mapping as ORM;
@@ -177,5 +178,9 @@ class Facture
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+    public function getDateFormat(){
+        return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));        
+        return Outil::getDateFormatingsansday($this->updatedAt->format('Y-m-d'));
     }
 }

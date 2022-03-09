@@ -7,13 +7,14 @@
 {% block body %}
 
 
-   <h1> Liste devis </h1> 
-    <a class="btn btn-outline-primary mb-2" href="{{ path('facture_new') }}">Ajouter devis </a>
+   <h1> Liste Facture </h1> 
+    <a class="btn btn-outline-primary mb-2" href="{{ path('facture_new') }}">Ajouter une facture </a>
     <table id="table2" class="table table-striped table-bordered">
         <thead>
             <tr> 
-                <th>Service</th>
+                <th>Référence</th>
                 <th>client</th>
+                <th>Date de création</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
             <tr> 
                 <td>{{ facture.nom }}</td>
                 <td>{{ facture.client.nom }}</td>
+                <td>{{ facture.DateFormat }}</td>
 
                 <td>
                     <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
@@ -31,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">il y a aucun devis dans votre table </td>
+                <td colspan="5">il y a aucune facture dans votre table </td>
             </tr>
         {% endfor %}
         </tbody>

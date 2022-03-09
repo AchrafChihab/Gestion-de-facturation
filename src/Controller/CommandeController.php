@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Devis;
 use App\Entity\Facture;
 use App\Entity\Commande;
@@ -53,6 +54,11 @@ class CommandeController extends AbstractController
         $commande = new Commande();
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
+        $dateTimeNow = new DateTime('now');
+
+        if ($commande->getCreatedAt() === null) {
+            $commande->setCreatedAt($dateTimeNow);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
@@ -85,6 +91,11 @@ class CommandeController extends AbstractController
     {
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
+
+        $dateTimeNow = new DateTime('now');
+
+        $commande->setUpdatedAt($dateTimeNow);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();

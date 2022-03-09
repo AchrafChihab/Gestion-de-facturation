@@ -30,7 +30,7 @@ class CommandeCodeGenerator
 
             $now     = new \DateTime();
             $year    = $now->format('Y');
-            $prefix  = '';
+            $prefix  = '#';
 
             $em = $args->getEntityManager();  
             $maxCode = $em->getRepository(Commande::class)->findMaxCode($year, $prefix);

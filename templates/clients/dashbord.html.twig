@@ -197,32 +197,93 @@
 
             <h6 class="mb-0 text-uppercase">Les factures recentes</h6>
             <hr>
-            <table id="table2" class="table table-striped table-bordered">
-                <thead>
-                    <tr> 
-                        <th>Référence</th>
-                        <th>client</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for facture in factures %}
-                    <tr> 
-                        <td>{{ facture.nom }}</td>
-                        <td>{{ facture.client.nom }}</td>
-
-                        <td>
-                            <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
-                            <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
-                            {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5">il y a aucun devis dans votre table </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                        <div class="row">
+              <div class="col-6 col-lg-6 col-xl-6 d-flex">
+                <div class="card radius-10 w-100">
+                  <div class="card-header bg-transparent">
+                    <div class="row g-3 align-items-center">
+                      <div class="col">
+                        <h5 class="mb-0">Derniere commande </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                          <tr> 
+                            <th>Référence</th>
+                            <th>client</th>
+                            <th>date de création</th>
+                            <th>actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for com in commande %}
+                          <tr> 
+                            <td>{{ com.nom }}</td>
+                            <td>{{ com.client.nom }}</td>
+                            <td>{{ com.DateFormat }}</td>
+                            <td>
+                                <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': com.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                                <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': com.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                                {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
+                            </td>
+                          </tr>
+                          {% else %}
+                              <tr>
+                                  <td colspan="5">il y a aucun devis dans votre table </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-lg-6 col-xl-6 d-flex">
+                <div class="card radius-10 w-100">
+                  <div class="card-header bg-transparent">
+                    <div class="row g-3 align-items-center">
+                      <div class="col">
+                        <h5 class="mb-0">Derniere facture  </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                          <tr> 
+                            <th>Référence</th>
+                            <th>client</th>
+                            <th>date de création</th>
+                            <th>actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for facture  in factures  %}
+                          <tr> 
+                            <td>{{ facture.nom }}</td>
+                            <td>{{ facture.client.nom }}</td>
+                            <td>{{ facture.DateFormat }}</td>
+                            <td>
+                                <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                                <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                                {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
+                            </td>
+                          </tr>
+                          {% else %}
+                              <tr>
+                                  <td colspan="5">il y a aucun devis dans votre table </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
  {% endblock %}

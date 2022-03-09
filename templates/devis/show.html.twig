@@ -39,9 +39,10 @@
                                     <i class="bi bi-person text-primary"></i>
                                 </div>
                                 <div class="info">
-                                    <h6 class="mb-2">Le client {{ client_selected.nom  }} </h6> 
-                                    <p class="mb-1">Adresse :  {{ client_selected.adress  }}</p>
-                                    <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p>
+                                    <h6 class="mb-2"><strong>Le client</strong> : {{ client_selected.nom  }} </h6> 
+                                    <p class="mb-1"><strong>Pays</strong> : {{ client_selected.pays }}</p>
+                                    <p class="mb-1"><strong>Adresse </strong> : {{ client_selected.adress  }}</p>
+                                    <p class="mb-1"><strong> numero téléphone </strong>: {{ client_selected.telephone }}</p>                                    
                                 </div>
                             </div>
                         </div>
@@ -56,8 +57,8 @@
                             </div>
                             <div class="info">
                                 <h6 class="mb-2">Order information</h6>
+                                <p class="mb-1"><strong>Date de creation</strong> : {{ devi.dateFormat }}</p>
                                 <p class="mb-1"><strong>Référence devi</strong> : {{ devi.nom }}</p>
-                                <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
                                 <p class="mb-1"><strong>Status</strong> : {{ devi.statue }}</p>
                             </div>
                         </div>
@@ -210,43 +211,44 @@
 <div id="printableArea" class="impression">
     <div class="card-body">
         <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
-            <div class="col">
-                <div class="card border shadow-none radius-10">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="icon-box bg-light-primary border-0">
-                                <i class="bi bi-person text-primary"></i>
-                            </div>
-                            <div class="info">
-                                <h6 class="mb-2">Le client {{ client_selected.nom  }}</h6>
-                                <p class="mb-1">Adresse :  {{ client_selected.adress  }}</p>
-                                <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p>
+                <div class="col">
+                    <div class="card border shadow-none radius-10">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-box bg-light-primary border-0">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                    <div class="info">
+                                    <h6 class="mb-2"><strong>Le client</strong> : {{ client_selected.nom  }} </h6> 
+                                    <p class="mb-1"><strong>Pays</strong> : {{ client_selected.pays }}</p>
+                                    <p class="mb-1"><strong>Adresse </strong> : {{ client_selected.adress  }}</p>
+                                    <p class="mb-1"><strong> numero téléphone </strong>: {{ client_selected.telephone }}</p>                                    
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-            <div class="card border shadow-none radius-10">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="icon-box bg-light-success border-0">
-                            <i class="bi bi-truck text-success"></i>
+                <div class="col">
+                    <div class="card border shadow-none radius-10">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-box bg-light-success border-0">
+                                    <i class="bi bi-truck text-success"></i>
+                                </div>
+                                <div class="info">
+                                    <h6 class="mb-2">Order information</h6>
+                                    <p class="mb-1"><strong>Date de creation</strong> : {{ devi.dateFormat }}</p>
+                                    <p class="mb-1"><strong>Référence devi</strong> : {{ devi.nom }}</p>
+                                    <p class="mb-1"><strong>Status</strong> : {{ devi.statue }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="info">
-                            <h6 class="mb-2">Order information</h6>
-                            <p class="mb-1"><strong>Référence devi</strong> : {{ devi.nom }}</p>
-                            <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
-                            <p class="mb-1"><strong>Statue</strong> : {{ devi.statue }}</p>
                         </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </div>
-        <!--end row-->
+            <!--end row-->
 
-        <div class="row">
+            <div class="row">
 
             <div class="col-12 col-lg-8">
                 <div class="loginform"> 

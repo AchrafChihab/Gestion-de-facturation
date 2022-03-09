@@ -62,14 +62,14 @@ class DevisController extends AbstractController
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($devi);
             $dateTimeNow = new DateTime('now');
 
         if ($devi->getCreatedAt() === null) {
             $devi->setCreatedAt($dateTimeNow);
         }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($devi);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('devis_index', [], Response::HTTP_SEE_OTHER);
@@ -98,10 +98,10 @@ class DevisController extends AbstractController
     {
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
-
+        $dateTimeNow = new DateTime('now');
+        $devi->setUpdatedAt($dateTimeNow);
         if ($form->isSubmitted() && $form->isValid()) {
-            $dateTimeNow = new DateTime('now');
-            $devi->setUpdatedAt($dateTimeNow);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('devis_index', [], Response::HTTP_SEE_OTHER);

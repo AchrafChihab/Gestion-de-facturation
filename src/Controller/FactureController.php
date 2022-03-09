@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Statue;
@@ -81,6 +82,11 @@ class FactureController extends AbstractController
         }
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
+        $dateTimeNow = new DateTime('now');
+
+        if ($facture->getCreatedAt() === null) {
+            $facture->setCreatedAt($dateTimeNow);
+        }
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,6 +133,10 @@ class FactureController extends AbstractController
     {
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
+
+        $dateTimeNow = new DateTime('now');
+
+        $facture->setUpdatedAt($dateTimeNow);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
