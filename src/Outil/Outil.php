@@ -323,20 +323,12 @@ class Outil {
 
     static public function getDateFormatingsansday($actualite_date = "", $lang = "fr")
     {
-
         if ($actualite_date == "") {
-
             $actualite_date = date("Y-m-d");
         }
-
         //return $date_format; 
-
-
-
         $datee = date_create($actualite_date);
-
         $date_format = date_format($datee, "d") . " " . Outil::month_fr(date_format($datee, "F"), $lang) . " " . date_format($datee, "Y");
-
         return $date_format;
     }
 

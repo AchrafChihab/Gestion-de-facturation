@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Clients;
 use App\Entity\Facture;
 use App\Form\ClientsType;
+use App\Repository\DevisRepository;
 use App\Repository\ClientsRepository;
 use App\Repository\FactureRepository;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\LignefactureRepository;
@@ -23,7 +25,7 @@ class ClientsController extends AbstractController
     /**
      * @Route("/dashbord", name="dashbord", methods={"GET"})
      */
-    public function dashbord(LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,ClientsRepository $clientsRepository): Response
+    public function dashbord(CommandeRepository $commandeRepository, LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,ClientsRepository $clientsRepository): Response
     {
         $totalrevenue = $lignefactureRepository->Sommeligne();
         $client = $clientsRepository->findAll();        
@@ -31,6 +33,7 @@ class ClientsController extends AbstractController
         return $this->render('clients/dashbord.html.twig', [
             'clients'       => $clientsRepository->findAll(),
             'factures'      => $factureRepository->findAll(),
+            'commande'      => $commandeRepository->findAll(),
             'clientnumber'  =>$clientnumber,
             'totalrevenue'  => $totalrevenue
         ]);
@@ -70,15 +73,19 @@ class ClientsController extends AbstractController
     /**
      * @Route("/{id}", name="clients_show", methods={"GET"})
      */
-    public function show($id,LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,Clients $client): Response
+    public function show($id,CommandeRepository $commandeRepository, DevisRepository $devisRepository , LignefactureRepository $lignefactureRepository,FactureRepository $factureRepository,Clients $client): Response
     {
         $factures = $factureRepository->Findbyone($id);
+        $commande = $commandeRepository->Findbyone($id);
+        $devis = $devisRepository->Findbyone($id);
         $facturepayer = $factureRepository->getCountFactureBy($id,'valider');
         $totalfactureclient = $lignefactureRepository->SommeTotallignefactureDuClient($id);
         $clientnumber = count($factures);
         return $this->render('clients/show.html.twig', [
             'client' => $client,
             'factures' => $factures,
+            'commande' => $commande,
+            'devis' => $devis,
             'clientnumber' => $clientnumber,
             'facturepayer' => $facturepayer,
             'totalfactureclient' => $totalfactureclient,

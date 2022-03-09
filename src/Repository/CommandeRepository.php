@@ -28,6 +28,18 @@ class CommandeRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function Findbyone($client)
+    {
+        return $this->createQueryBuilder('f')
+            ->LeftJoin('f.client','c')
+            ->Where('f.client = :id')
+            ->setParameter('id', $client)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */

@@ -19,9 +19,9 @@
                     {% endif %}
                     {# <form>
                         <a class="btn btn-primary" type="button" onclick="printDiv('printableArea')" value="print a div!" >Imprimer cette page</a>
-                        <a class="btn btn-outline-primary" href="{{ path('download_file', {'id': devi.id}) }}">telecharger cette page</a>
-                        <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('senddevismail', {'id': devi.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
-                        <a class="btn btn-outline-primary" id='commande'  href="{{ path('commande', {'id': devi.id}) }}?idclient={{ client_selected.id }}">convertire en commande</a>
+                        <a class="btn btn-outline-primary" href="{{ path('download_file', {'id': commande.id}) }}">telecharger cette page</a>
+                        <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('sendcommandesmail', {'id': commande.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
+                        <a class="btn btn-outline-primary" id='commande'  href="{{ path('commande', {'id': commande.id}) }}?idclient={{ client_selected.id }}">convertire en commande</a>
                    </form> #}
                 </div> 
             </div>
@@ -30,7 +30,7 @@
 
 
         <div class="card border shadow-none">
-            <div class="card-header py-3">
+           {#  <div class="card-header py-3">
                 <div class="row align-items-center g-">
                     <div class="col-12 col-lg-2">
                       <h5 class="mb-0">Commande {{ commande.nom }}</h5>
@@ -39,7 +39,7 @@
                         <form>
                         <a class="btn btn-primary" type="button" onclick="printDiv('printableArea')" value="print a div!" >Imprimer cette page</a>
                         <a class="btn btn-outline-primary" href="{{ path('download_file', {'id': commande.id}) }}">telecharger cette page</a>
-                        <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('senddevismail', {'id': commande.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
+                        <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('sendcommandesmail', {'id': commande.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
                         <a class="btn btn-outline-primary" id='commande'  href="{{ path('convertfacture', {'id': commande.id}) }}?idclient={{ client_selected.id }}">convertire en facture</a>
                         </form>
                     </div>
@@ -52,6 +52,7 @@
                             <address class="m-t-5 m-b-5">
                             <h6 class="mb-2">Information du client</h6>
                                 <p class="mb-2"><strong>Le client</strong> {{ client_selected.nom  }}</p>
+                                <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>  
                                 <p class="mb-1"><strong>Adresse : </strong> {{ client_selected.adress  }}</p>
                                 <p class="mb-1"><strong> numero téléphone : </strong>{{ client_selected.telephone }}</p>
                             </address>
@@ -62,7 +63,7 @@
                     <address class="m-t-5 m-b-5">
                         <h6 class="mb-2">Information de la commande </h6>
                         <p class="mb-1"><strong>Référence commande</strong> : {{ commande.nom }}</p>
-                        <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
+                        <p class="mb-1"><strong>Date de création</strong> : {{ commande.DateFormat }}</p>
                         <p class="mb-1"><strong>Status</strong> : {{ commande.statue }}</p>
                     
                     </address>
@@ -154,26 +155,27 @@
                    <span class=""><i class="bi bi-envelope-fill"></i> info@example.com</span>
                 </p>
             </div>
-           </div>       
-        {# <div class="card-body">
-            <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
-                <div class="col">
-                    <div class="card border shadow-none radius-10">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="icon-box bg-light-primary border-0">
-                                    <i class="bi bi-person text-primary"></i>
-                                </div>
+           </div>    #}   
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3">
+            <div class="col">
+                <div class="card border shadow-none radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="icon-box bg-light-primary border-0">
+                                <i class="bi bi-person text-primary"></i>
+                            </div>
                                 <div class="info">
-                                    <h6 class="mb-2">Le client {{ client_selected.nom  }}</h6>
-                                    <p class="mb-1">Adresse :  {{ client_selected.adress  }}</p>
-                                    <p class="mb-1"> numero téléphone : {{ client_selected.telephone }}</p>
-                                </div>
+                                <h6 class="mb-2"><strong>Le client</strong> : {{ client_selected.nom  }} </h6> 
+                                <p class="mb-1"><strong>Pays</strong> : {{ client_selected.pays }}</p>
+                                <p class="mb-1"><strong>Adresse </strong> : {{ client_selected.adress  }}</p>
+                                <p class="mb-1"><strong> numero téléphone </strong>: {{ client_selected.telephone }}</p>                                    
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="col">
                 <div class="card border shadow-none radius-10">
                     <div class="card-body">
                         <div class="d-flex align-items-center gap-3">
@@ -182,8 +184,8 @@
                             </div>
                             <div class="info">
                                 <h6 class="mb-2">Order information</h6>
+                                <p class="mb-1"><strong>Date de creation</strong> : {{ commande.dateFormat }}</p>
                                 <p class="mb-1"><strong>Référence commande</strong> : {{ commande.nom }}</p>
-                                <p class="mb-1"><strong>Shipping</strong> : {{ client_selected.pays }}</p>
                                 <p class="mb-1"><strong>Status</strong> : {{ commande.statue }}</p>
                             </div>
                         </div>
@@ -191,96 +193,96 @@
                     </div>
                 </div>
             </div>
-            <!--end row-->
+                <!--end row-->
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-12 col-lg-8">
-                    <div class="loginform"> 
-                       <a class="btn btn-outline-success " href="{{ path('commande_new') }}?client={{client_selected.id}}">Ajouter devis </a> 
-                    </div>#}
-                      {#<div class="card border shadow-none radius-10">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table align-middle mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                        <th>Nom Commande </th>
-                                        <th>Prix </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% set total = 0  %}
-                                        {% for lignefacture in commande.ligneCommandes %}
-                                            <tr> 
-                                                <td>{{ lignefacture.service }}</td> 
-                                                <td>{{ lignefacture.prix }}</td>
-          
-                                            </tr>
-                                            
-                                                {% set  total = total +  lignefacture.prix %}
-                                        {% else %}
+                    <div class="col-12 col-lg-8">
+                        <div class="loginform"> 
+                        <a class="btn btn-outline-success " href="{{ path('commande_new') }}?client={{client_selected.id}}">Ajouter commandes </a> 
+                        </div>
+                        <div class="card border shadow-none radius-10">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table align-middle mb-0">
+                                        <thead class="table-light">
                                             <tr>
-                                                <td colspan="4">no records found</td>
+                                            <th>Nom Commande </th>
+                                            <th>Prix </th>
                                             </tr>
-                                        {% endfor %}
-                                                {% set  taxes = (total * 20) / 100  %}
+                                        </thead>
+                                        <tbody>
+                                        {% set total = 0  %}
+                                            {% for lignefacture in commande.ligneCommandes %}
+                                                <tr> 
+                                                    <td>{{ lignefacture.service }}</td> 
+                                                    <td>{{ lignefacture.prix }}</td>
+            
+                                                </tr>
+                                                
+                                                    {% set  total = total +  lignefacture.prix %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="4">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                                    {% set  taxes = (total * 20) / 100  %}
 
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1" class="text-end">total</td>
+                                                <td >{{ total }}</td>
+                                            </tr>
                                             
-                                        </tr>
-                                        <tr>
-                                            <td colspan="1" class="text-end">total</td>
-                                            <td >{{ total }}</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="card border shadow-none bg-light radius-10">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-4">
-                                <div>
-                                    <h5 class="mb-0">Le Devis</h5>
-                                </div>
-                                <div class="ms-auto">
-                                    <button type="button" class="btn alert-success radius-30 px-4">{{ commande.statue }}</button>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div>
-                                    <p class="mb-0">total Net </p>
-                                </div>
-                                <div class="ms-auto">
-                                    <h5 class="mb-0">{{ total }} Dhs</h5>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div>
-                                    <p class="mb-0">Taxes </p>
-                                </div>
-                                <div class="ms-auto">
-                                    <h5 class="mb-0">{{ taxes }} Dhs</h5>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div>
-                                    <p class="mb-0">total </p>
-                                </div>
-                                <div class="ms-auto">
-                                    <h5 class="mb-0">{{ total + taxes }} Dhs</h5>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="card border shadow-none bg-light radius-10">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div>
+                                        <h5 class="mb-0">Le commandes</h5>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button type="button" class="btn alert-success radius-30 px-4">{{ commande.statue }}</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div>
+                                        <p class="mb-0">total Net </p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h5 class="mb-0">{{ total }} Dhs</h5>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div>
+                                        <p class="mb-0">Taxes </p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h5 class="mb-0">{{ taxes }} Dhs</h5>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div>
+                                        <p class="mb-0">total </p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h5 class="mb-0">{{ total + taxes }} Dhs</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
             </div> 
-        </div> #}
+        </div>
     </div>
-</div>
  {# partie d'impression #}
 
 <div id="printableArea" class="impression">
@@ -325,7 +327,7 @@
 
             <div class="col-12 col-lg-8">
                 <div class="loginform"> 
-                    {# <a class="btn btn-outline-success " href="{{ path('commande_new') }}?client={{client_selected.id}}">Ajouter devis </a> #}
+                    {# <a class="btn btn-outline-success " href="{{ path('commande_new') }}?client={{client_selected.id}}">Ajouter commandes </a> #}
                 </div>
                 <div class="card border shadow-none radius-10">
                     <div class="card-body">
@@ -349,7 +351,7 @@
                                             {% set  total = total +  lignefacture.prix %}
                                     {% else %}
                                         <tr>
-                                            <td colspan="5">il y a aucun devis dans votre table </td>
+                                            <td colspan="5">il y a aucun commandes dans votre table </td>
                                         </tr>
                                     {% endfor %}
                                             {% set  taxes = (total * 20) / 100  %}

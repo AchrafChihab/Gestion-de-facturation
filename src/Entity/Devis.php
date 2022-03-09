@@ -146,6 +146,10 @@ class Devis
         $commande->setNom($this->getNom()); 
         $commande->setClient($this->getClient()); 
         $commande->setStatue($this->getStatue()); 
+        $dateTimeNow = new DateTime('now');
+        if ($commande->getCreatedAt() === null) {
+            $commande->setCreatedAt($dateTimeNow);
+        }
         foreach($this->getLignedevis() as $ligne ){
 
             $newligne = new LigneCommande(); 
@@ -184,7 +188,8 @@ class Devis
     }
 
     public function getDateFormat(){
-        return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));
+        return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));        
+        return Outil::getDateFormatingsansday($this->updatedAt->format('Y-m-d'));
     }
 
 

@@ -23,7 +23,7 @@
             <tr> 
                 <td>{{ facture.nom }}</td>
                 <td>{{ facture.client.nom }}</td>
-                <td>{{ facture.createdAt }}</td>
+                <td>{{ facture.DateFormat }}</td>
 
                 <td>
                     <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('commande_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>

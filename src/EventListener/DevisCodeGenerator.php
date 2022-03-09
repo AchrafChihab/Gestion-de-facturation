@@ -30,7 +30,7 @@ class DevisCodeGenerator
 
             $now     = new \DateTime();
             $year    = $now->format('Y');
-            $prefix  = '';
+            $prefix  = '#';
 
             $em = $args->getEntityManager();  
             $maxCode = $em->getRepository(Devis::class)->findMaxCode($year, $prefix);

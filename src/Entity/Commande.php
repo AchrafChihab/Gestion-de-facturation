@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use App\Outil\Outil;
 use App\Entity\Statue;
 use App\Entity\Clients;
 use App\Entity\Facture;
@@ -143,6 +144,10 @@ class Commande
         $facture->setNom($this->getNom()); 
         $facture->setClient($this->getClient()); 
         $facture->setStatue($this->getStatue()); 
+        $dateTimeNow = new DateTime('now');
+        if ($facture->getCreatedAt() === null) {
+            $facture->setCreatedAt($dateTimeNow);
+        }
         foreach($this->getLignecommandes() as $ligne ){
             $newligne = new Lignefacture(); 
             $newligne->setPrix($ligne->getPrix()); 
@@ -177,6 +182,9 @@ class Commande
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+    public function getDateFormat(){
+        return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));
     }
  
  
