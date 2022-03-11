@@ -182,7 +182,7 @@ table tr td:last-child {
 }
 </style>
 
-{% set client_selected = devis.client %}
+{% set client_selected = commande.clientId %}
 
 <div class="page-container">
     Page
@@ -225,7 +225,7 @@ table tr td:last-child {
     </tr>
     <tr>
       <td>
-        Invoice No: <strong>{{ devis.nom }}</strong>
+        Invoice No: <strong>{{ commande.nom }}</strong>
       </td>
     </tr>
   </table>
@@ -234,24 +234,24 @@ table tr td:last-child {
   <table class="line-items-container">
     <thead>
       <tr>
-        <th class="heading-quantity">Nom Devis</th>
+        <th class="heading-quantity">Nom commande</th>
         <th class="heading-quantity"></th>
         <th class="heading-price">Price</th>
       </tr>
     </thead>
     <tbody>
         {% set total = 0  %}
-            {% for lignefacture in devis.lignedevis %}
+            {% for lignecommandes in commande.lignecommandes %}
                 <tr> 
-                    <td >{{ lignefacture.service }}</td>
-                    <td colspan="2" class="bold right">{{ lignefacture.prix }} DHS</td>
+                    <td >{{ lignecommandes.service }}</td>
+                    <td colspan="2" class="bold right">{{ lignecommandes.prix }} DHS</td>
 
                 </tr>
                 
-                    {% set  total = total +  lignefacture.prix %}
+                    {% set  total = total +  lignecommandes.prix %}
             {% else %}
                 <tr>
-                    <td colspan="5">il y a aucun devis dans votre table </td>
+                    <td colspan="5">il y a aucun commande dans votre table </td>
                 </tr>
             {% endfor %}
                     {% set  taxes = (total * 20) / 100  %}

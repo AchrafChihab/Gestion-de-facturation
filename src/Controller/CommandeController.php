@@ -5,8 +5,11 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Devis;
 use App\Entity\Facture;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Commande;
 use App\Form\CommandeType;
+use App\Entity\LigneCommande;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,8 +29,53 @@ class CommandeController extends AbstractController
     public function index(CommandeRepository $commandeRepository): Response
     {
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'commandes' => $commandeRepository->getAllByDesc(),
         ]);
+    }
+
+     /**
+     * @Route("/{id}/download", name="telecharger_commande_pdf", methods={"GET"})
+     */
+    public function telechargerdevispdf(Request $request,EntityManagerInterface $entityManager,CommandeRepository $CommandeRepository,$id): Response
+    { 
+        $commande = $CommandeRepository->findOneBy(['id'=>$id]);
+
+        $pdfoption = new Options();
+        
+        
+        $pdfoption->set('Defaultfont','Arial');
+        $pdfoption->setIsRemoteEnabled(true);
+        
+        
+        $dompdf = new Dompdf($pdfoption);
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ]
+        ]);
+        $dompdf ->setHttpContext($context);
+
+        $html = $this->renderView('devis/imprimer.html.twig', [
+                    'commande' => $commande
+                ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+        return new Response($commande);
     }
 
     /**
@@ -54,12 +102,6 @@ class CommandeController extends AbstractController
         $commande = new Commande();
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
-        $dateTimeNow = new DateTime('now');
-
-        if ($commande->getCreatedAt() === null) {
-            $commande->setCreatedAt($dateTimeNow);
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
@@ -69,6 +111,26 @@ class CommandeController extends AbstractController
 
         return $this->renderForm('commande/new.html.twig', [
             'commande' => $commande,
+            'form' => $form,
+        ]);
+    }
+
+        /**
+     * @Route("/dupliquer_commande/{id}", name="dupliquer_commande", methods={"GET", "POST"})
+    */
+    public function dupliquercommande(Request $request, EntityManagerInterface $entityManager,Commande $commande): Response
+    {        
+        $new_commande =  $commande->dupliquer_commande();
+        $form = $this->createForm(CommandeType::class, $new_commande);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($new_commande);
+            $entityManager->flush();
+            return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+        }
+        
+        return $this->renderForm('commande/dupliquer.html.twig', [
+            'commande' => $new_commande,
             'form' => $form,
         ]);
     }
@@ -91,12 +153,6 @@ class CommandeController extends AbstractController
     {
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
-
-        $dateTimeNow = new DateTime('now');
-
-        $commande->setUpdatedAt($dateTimeNow);
-        
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 

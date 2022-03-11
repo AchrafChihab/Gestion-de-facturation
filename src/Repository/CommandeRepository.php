@@ -18,6 +18,8 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
+
+    
     public function findMaxCode($year, $prefix)
     {
         $qb = $this->createQueryBuilder('entity');
@@ -39,6 +41,27 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
+    public function getAllByDesc()
+    {
+        return $this->createQueryBuilder('C') 
+            ->orderBy('C.createdAt', 'DESC')
+            ->setMaxResults(200)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
+
+    public function getLastesByDesc()
+    {
+        return $this->createQueryBuilder('C') 
+            ->orderBy('C.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
 
     // /**
     //  * @return Commande[] Returns an array of Commande objects

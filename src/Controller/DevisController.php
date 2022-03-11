@@ -3,11 +3,15 @@
 namespace App\Controller;
 
 use DateTime;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Devis;
 use App\Entity\Clients;
 use App\Form\DevisType;
+use App\Entity\Lignedevis;
 use App\Repository\DevisRepository;
 use App\Repository\ClientsRepository;
+use App\Repository\FactureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,22 +22,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/devis")
- */
+*/
 class DevisController extends AbstractController
 {
     /**
      * @Route("/", name="devis_index", methods={"GET"})
-     */
+    */
     public function index(DevisRepository $devisRepository): Response
     {
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findAll(),
+            'devis' => $devisRepository->getDevis('expedier'),
+        ]);
+    }
+    /**
+     * @Route("/liste_a_voir", name="listeavoir", methods={"GET"})
+    */
+    public function listeavoir(DevisRepository $DevisRepository): Response
+    {
+        $devis = $DevisRepository->getDevisAnnuler('expedier');
+
+        return $this->render('devis/listeavoir.html.twig', [
+            'devis' => $devis
         ]);
     }
 
     /**
      * @Route("/{id}/devis", name="listedevisclient", methods={"GET", "POST"})
-     */
+    */
     public function listedevisclient(Request $request,EntityManagerInterface $entityManager,ClientsRepository $ClientRepository,DevisRepository $devisRepository,$id): Response
     { 
         $client_selected = $ClientRepository->findOneBy(['id'=>$id]);
@@ -54,19 +69,60 @@ class DevisController extends AbstractController
         }        
     }
 
+     /**
+     * @Route("/{id}/download", name="telecharger_devis_pdf", methods={"GET"})
+     */
+    public function telechargerdevispdf(Request $request,EntityManagerInterface $entityManager,Devis $devis,ClientsRepository $ClientRepository,DevisRepository $DevisRepository,$id): Response
+    { 
+        $devis = $DevisRepository->findOneBy(['id'=>$id]);
+
+        $pdfoption = new Options();
+        
+        
+        $pdfoption->set('Defaultfont','Arial');
+        $pdfoption->setIsRemoteEnabled(true);
+        
+        
+        $dompdf = new Dompdf($pdfoption);
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ]
+        ]);
+        $dompdf ->setHttpContext($context);
+
+        $html = $this->renderView('devis/imprimer.html.twig', [
+                    'devis' => $devis
+                ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+        return new Response($devis);
+    }
+
     /**
      * @Route("/new", name="devis_new", methods={"GET", "POST"})
-     */
+    */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
-            $dateTimeNow = new DateTime('now');
-
-        if ($devi->getCreatedAt() === null) {
-            $devi->setCreatedAt($dateTimeNow);
-        }
+           
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($devi);
 
@@ -82,8 +138,29 @@ class DevisController extends AbstractController
     }
 
     /**
+     * @Route("/dupliquer_devis/{id}", name="dupliquer_devis", methods={"GET", "POST"})
+    */
+    public function dupliquerdevis(Request $request, EntityManagerInterface $entityManager,Devis $devi ): Response
+    {        
+        $new_devis =  $devi->depluc();  
+     
+        $form = $this->createForm(DevisType::class, $new_devis);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($new_devis);
+            $entityManager->flush();
+            return $this->redirectToRoute('devis_index', [], Response::HTTP_SEE_OTHER);
+        }
+        
+        return $this->renderForm('devis/dupliquer.html.twig', [
+            'devi' => $new_devis,
+            'form' => $form,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="devis_show", methods={"GET"})
-     */
+    */
     public function show(Devis $devi): Response
     {
         return $this->render('devis/show.html.twig', [
@@ -93,13 +170,12 @@ class DevisController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="devis_edit", methods={"GET", "POST"})
-     */
+    */
     public function edit(Request $request, Devis $devi, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
-        $dateTimeNow = new DateTime('now');
-        $devi->setUpdatedAt($dateTimeNow);
+        
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->flush();
@@ -115,7 +191,7 @@ class DevisController extends AbstractController
 
     /**
      * @Route("/{id}", name="devis_delete", methods={"POST"})
-     */
+    */
     public function delete(Request $request, Devis $devi, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->request->get('_token'))) {
@@ -128,7 +204,7 @@ class DevisController extends AbstractController
 
     /**
      * @Route("/{id}/mail/", name="senddevismail", methods={"GET"})
-     */
+    */
     public function contact(MailerInterface $mailer,Request $request,DevisRepository $DevisRepository,EntityManagerInterface $entityManager,$id): Response
     {       
         $devis = $DevisRepository->findOneBy(['id'=>$id]);

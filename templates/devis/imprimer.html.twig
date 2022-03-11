@@ -241,14 +241,14 @@ table tr td:last-child {
     </thead>
     <tbody>
         {% set total = 0  %}
-            {% for lignefacture in devis.lignedevis %}
+            {% for lignesdevis in devis.lignedevis %}
                 <tr> 
-                    <td >{{ lignefacture.service }}</td>
-                    <td colspan="2" class="bold right">{{ lignefacture.prix }} DHS</td>
+                    <td >{{ lignesdevis.service }}</td>
+                    <td colspan="2" class="bold right">{{ lignesdevis.prix }} DHS</td>
 
                 </tr>
                 
-                    {% set  total = total +  lignefacture.prix %}
+                    {% set  total = total +  lignesdevis.prix %}
             {% else %}
                 <tr>
                     <td colspan="5">il y a aucun devis dans votre table </td>

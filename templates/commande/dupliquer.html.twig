@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un devis{% endblock %}
-{% macro niceForme(form) %}
-        <div class="row itemservice">
-            <div class="col-md-4">
+{% block title %}Créer une commande{% endblock %}
+
+
+    {% macro niceForme(form) %}
+        <div class="row">
+            <div class="col-md-5">
             {{ form_row(form.service) }}
             </div>
             <div class="col-md-1">
@@ -12,51 +14,54 @@
                     +
                 </button>
             </div>
-
             <div class="col-md-2">
                 {{ form_row(form.qte) }}
             </div>
             <div class="col-md-2">
             {{ form_row(form.prix) }}
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-danger btn-remove"  type="button">Supprimer</button>
+            <div class="col-md-2">            
+                <button class="btn btn-danger btn-remove"   type="button">Supprimer</button>
             </div>
         </div>
-{% endmacro niceForme %}
-{% import _self as formMacros %}
-
+     {% endmacro niceForme %}
+     
 {% block body %}
-    <h1>Créer un devis</h1>
+    <h1>Créer une commande</h1>
+
     {{ form_start(form) }}
     <div class="row">
         {# <div class="col-md-8">{{ form_row(form.nom) }}</div> #}
         <div class="col-md-8">{{ form_row(form.client) }}</div>
         <div class="col-md-8">{{ form_row(form.statue) }}</div>
-        {# <div class="col-md-8">{{ form_row(form.lignesfacture) }}</div> #}
-    </div>    
-    <div class="listeligneorder">
-        <h6> Les services </h6>
-        <div class="lignesfacture_contenu col-md-12"
-            data-index="{{ form.lignedevis|length > 0 ? form.lignedevis|last.vars.name + 1 : 0 }}"
-            data-prototype="{{ formMacros.niceForme(form.lignedevis.vars.prototype)|e }}">
-           
-        </div>  
-        <button type="button" class="btn btn-outline-primary mb-2 add_item_link" data-collection-holder-class="lignesfacture_contenu">
-            Ajouter une ligne
-        </button>
+
+    </div> 
+    {% import _self as formMacros %}  
+    <div class="row">
+        <div class="listeligneorder">
+            <h6> Les services </h6>
+            <div class="lignesfacture_contenu col-md-12"
+                data-index="{{ form.ligneCommandes|length > 0 ? form.ligneCommandes|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ formMacros.niceForme(form.ligneCommandes.vars.prototype)|e }}"> 
+                {% for lig in form.ligneCommandes %}
+                {{ formMacros.niceForme(lig) }}
+                {% endfor %}
+            </div>  
+            <button type="button" class="btn btn-outline-primary mb-2 add_item_link" data-collection-holder-class="lignesfacture_contenu">
+                Ajouter une ligne
+            </button>
+        </div> 
     </div>
     <div class="row"> 
-        <div class="col-md-4"> 
-            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>       
+        <div class="col-md-6"> 
+            <button class="btn btn-outline-success">{{ button_label|default('Modifier') }}</button>       
         </div>
-        <div class="col-md-4"> 
+        <div class="col-md-6"> 
             <a class="btn btn-outline-primary" href="{{ path('clients_index') }}">Revenir à la liste des clients</a>    
         </div>
     </div>
-    {# {{ form_widget(form) }} #}
-{{ form_end(form) }}    
-  
+{{ form_end(form) }}
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -118,5 +123,5 @@
         });
   });
 </script>
-{% endblock %}
 
+{% endblock %}

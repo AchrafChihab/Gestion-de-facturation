@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Devis;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Devis|null find($id, $lockMode = null, $lockVersion = null)
@@ -69,4 +71,60 @@ class DevisRepository extends ServiceEntityRepository
         ;
     }
     */
+    // /**
+    //  * @return Devis[] Returns an array of Devis objects
+    //  */
+    public function getAllByDesc()
+    {
+        return $this->createQueryBuilder('D') 
+            ->orderBy('D.createdAt', 'DESC')
+            ->setMaxResults(200)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
+
+
+
+    public function getDevis($statue_nom){
+
+        return $this->createQueryBuilder('D')
+          ->Join('D.statue','s')
+          ->Where('s.nom != :statue_nom')
+          ->setParameters(['statue_nom' => $statue_nom])
+          ->orderBy('D.createdAt', 'DESC')
+          ->setMaxResults(200)
+          ->getQuery()
+          ->getResult()
+      ;
+
+  }
+
+    public function getDevisAnnuler($statue_nom){
+
+        return $this->createQueryBuilder('D')
+          ->Join('D.statue','s')
+          ->Where('s.nom = :statue_nom')
+          ->setParameters(['statue_nom' => $statue_nom])
+          ->orderBy('D.createdAt', 'DESC')
+          ->setMaxResults(200)
+          ->getQuery()
+          ->getResult()
+      ;
+
+  }
+    public function getLastesByDesc()
+    {
+        return $this->createQueryBuilder('D') 
+            ->orderBy('D.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
+ 
+
+
+    
+
 }

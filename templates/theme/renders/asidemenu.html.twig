@@ -80,15 +80,24 @@
                 </li>
                 <li>
                     <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class="bi bi-gear"></i>
-                    </div>
-                    <div class="menu-title">Service </div>
+                        <div class="parent-icon"><i class="bi bi-file-text"></i></div>
+                        <div class="menu-title">Liste A voir</div>
                     </a>
                     <ul>
-                    <li> <a href="{{ path('service_index') }}"><i class="bi bi-sliders"></i>Liste des service</a>
-                    </li>
-                    <li> <a href="{{ path('service_new') }}"><i class="bi bi-file-plus"></i>Ajouter un service</a>
-                    </li>
+                        <li> <a href="{{ path('listeavoir') }}"><i class="bi bi-files"></i>Liste Annuler</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class="bi bi-gear"></i></div>
+                        <div class="menu-title">Service </div>
+                    </a>
+                    <ul>
+                        <li> <a href="{{ path('service_index') }}"><i class="bi bi-sliders"></i>Liste des service</a>
+                        </li>
+                        <li> <a href="{{ path('service_new') }}"><i class="bi bi-file-plus"></i>Ajouter un service</a>
+                        </li>
                     </ul>
                 </li>
 

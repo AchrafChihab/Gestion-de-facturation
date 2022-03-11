@@ -6,12 +6,13 @@ use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Outil\Outil;
-
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use App\Repository\DevisRepository;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo; 
+
 
 /**
  * @ORM\Entity(repositoryClass=DevisRepository::class)
@@ -50,6 +51,7 @@ class Devis
      * @var DateTime $created
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
@@ -57,6 +59,7 @@ class Devis
      * @var DateTime $updated
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -146,10 +149,6 @@ class Devis
         $commande->setNom($this->getNom()); 
         $commande->setClient($this->getClient()); 
         $commande->setStatue($this->getStatue()); 
-        $dateTimeNow = new DateTime('now');
-        if ($commande->getCreatedAt() === null) {
-            $commande->setCreatedAt($dateTimeNow);
-        }
         foreach($this->getLignedevis() as $ligne ){
 
             $newligne = new LigneCommande(); 
@@ -190,6 +189,24 @@ class Devis
     public function getDateFormat(){
         return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));        
         return Outil::getDateFormatingsansday($this->updatedAt->format('Y-m-d'));
+    }
+
+
+
+    
+    public function depluc(){ 
+        $devi = new Devis(); 
+        $devi->setClient($this->getClient()); 
+        $devi->setStatue($this->getStatue());   
+        foreach($this->getLignedevis() as $ligne ){ 
+            $newligne = new Lignedevis(); 
+            $newligne->setPrix($ligne->getPrix()); 
+            $newligne->setQte($ligne->getQte()); 
+            $newligne->setService($ligne->getService()); 
+            $newligne->setDevis($devi);
+            $devi->addLignedevi($newligne); 
+        }
+        return $devi; 
     }
 
 

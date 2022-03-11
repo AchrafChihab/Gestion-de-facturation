@@ -121,6 +121,18 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "omines/datatables-bundle": {
+        "version": "0.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.1",
+            "ref": "467488ddc00aa190c37a4357f226457d4dd6b339"
+        },
+        "files": [
+            "./config/packages/datatables.yaml"
+        ]
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -254,6 +266,15 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
+        }
     },
     "symfony/asset": {
         "version": "v5.4.0"

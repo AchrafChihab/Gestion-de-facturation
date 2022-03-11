@@ -203,7 +203,7 @@
                   <div class="card-header bg-transparent">
                     <div class="row g-3 align-items-center">
                       <div class="col">
-                        <h5 class="mb-0">Derniere commande </h5>
+                        <h5 class="mb-0">Dernière commande </h5>
                       </div>
                     </div>
                   </div>
@@ -225,8 +225,8 @@
                             <td>{{ com.client.nom }}</td>
                             <td>{{ com.DateFormat }}</td>
                             <td>
-                                <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': com.id}) }}"><i class="bi bi-eye-fill"></i></a>
-                                <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': com.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                                <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('commande_show', {'id': com.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                                <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('commande_edit', {'id': com.id}) }}"><i class="bi bi-pencil-fill"></i></a>
                                 {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
                             </td>
                           </tr>
@@ -246,7 +246,7 @@
                   <div class="card-header bg-transparent">
                     <div class="row g-3 align-items-center">
                       <div class="col">
-                        <h5 class="mb-0">Derniere facture  </h5>
+                        <h5 class="mb-0">Dernière facture  </h5>
                       </div>
                     </div>
                   </div>
