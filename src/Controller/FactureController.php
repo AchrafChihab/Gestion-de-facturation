@@ -41,7 +41,7 @@ class FactureController extends AbstractController
     public function index(FactureRepository $factureRepository): Response
     {
         return $this->render('facture/index.html.twig', [
-            'factures' => $factureRepository->findAll(),
+            'factures' => $factureRepository->getAllByDesc(),
         ]);
     }
     /**
@@ -82,13 +82,6 @@ class FactureController extends AbstractController
         }
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
-        $dateTimeNow = new DateTime('now');
-
-        if ($facture->getCreatedAt() === null) {
-            $facture->setCreatedAt($dateTimeNow);
-        }
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($facture);
             $entityManager->flush();
@@ -109,6 +102,27 @@ class FactureController extends AbstractController
                 'form' => $form,
             ]);
         }
+    }
+
+        /**
+     * @Route("/dupliquer_facture/{id}", name="dupliquer_facture", methods={"GET", "POST"})
+    */
+    public function dupliquerdevis(Request $request, EntityManagerInterface $entityManager,Facture $facture ): Response
+    {        
+        $new_devis =  $facture->dupliquer_facture();  
+     
+        $form = $this->createForm(FactureType::class, $new_devis);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($new_devis);
+            $entityManager->flush();
+            return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
+        }
+        
+        return $this->renderForm('facture/dupliquer.html.twig', [
+            'devi' => $new_devis,
+            'form' => $form,
+        ]);
     }
 
     /**
@@ -133,10 +147,6 @@ class FactureController extends AbstractController
     {
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
-
-        $dateTimeNow = new DateTime('now');
-
-        $facture->setUpdatedAt($dateTimeNow);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();

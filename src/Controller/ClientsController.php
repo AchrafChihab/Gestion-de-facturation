@@ -32,8 +32,8 @@ class ClientsController extends AbstractController
         $clientnumber = count($client);
         return $this->render('clients/dashbord.html.twig', [
             'clients'       => $clientsRepository->findAll(),
-            'factures'      => $factureRepository->findAll(),
-            'commande'      => $commandeRepository->findAll(),
+            'factures'      => $factureRepository->getLastesByDesc(),
+            'commande'      => $commandeRepository->getLastesByDesc(),
             'clientnumber'  =>$clientnumber,
             'totalrevenue'  => $totalrevenue
         ]);

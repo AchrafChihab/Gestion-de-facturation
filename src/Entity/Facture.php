@@ -52,6 +52,7 @@ class Facture
      * @var DateTime $created
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
@@ -59,6 +60,7 @@ class Facture
      * @var DateTime $updated
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -182,5 +184,22 @@ class Facture
     public function getDateFormat(){
         return Outil::getDateFormatingsansday($this->createdAt->format('Y-m-d'));        
         return Outil::getDateFormatingsansday($this->updatedAt->format('Y-m-d'));
+    }
+
+    public function dupliquer_facture(){
+        $facture = new Facture();
+
+        $facture->setNom($this->getNom()); 
+        $facture->setClient($this->getClient()); 
+        $facture->setStatue($this->getStatue()); 
+        foreach($this->getLignesfacture() as $ligne ){
+            $newligne = new Lignefacture(); 
+            $newligne->setPrix($ligne->getPrix()); 
+            $newligne->setQte($ligne->getQte()); 
+            $newligne->setService($ligne->getService()); 
+            $newligne->setFacture($facture);
+            $facture->addLignesfacture($newligne);
+        }
+        return $facture;        
     }
 }

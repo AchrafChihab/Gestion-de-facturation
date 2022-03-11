@@ -6,6 +6,13 @@
 parameters:
 
 services:
+
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     app_order.event_listener.generate_nom_order:
         class: App\EventListener\OrderCodeGenerator
         tags:

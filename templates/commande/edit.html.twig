@@ -31,7 +31,7 @@
 
     {{ form_start(form) }}
     <div class="row">
-        <div class="col-md-8">{{ form_row(form.nom) }}</div>
+        {# <div class="col-md-8">{{ form_row(form.nom) }}</div> #}
         <div class="col-md-8">{{ form_row(form.client) }}</div>
         <div class="col-md-8">{{ form_row(form.statue) }}</div>
 
@@ -41,9 +41,9 @@
         <div class="listeligneorder">
             <h6> Les services </h6>
             <div class="lignesfacture_contenu col-md-12"
-                data-index="{{ form.lignesfacture|length > 0 ? form.lignesfacture|last.vars.name + 1 : 0 }}"
-                data-prototype="{{ formMacros.niceForme(form.lignesfacture.vars.prototype)|e }}"> 
-                {% for lig in form.lignesfacture %}
+                data-index="{{ form.ligneCommandes|length > 0 ? form.ligneCommandes|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ formMacros.niceForme(form.ligneCommandes.vars.prototype)|e }}"> 
+                {% for lig in form.ligneCommandes %}
                 {{ formMacros.niceForme(lig) }}
                 {% endfor %}
             </div>  

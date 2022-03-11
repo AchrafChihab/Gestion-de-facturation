@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo; 
 
 /**
  * @ORM\Entity(repositoryClass=CommandeRepository::class)
@@ -49,6 +50,7 @@ class Commande
      * @var DateTime $created
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
@@ -56,6 +58,7 @@ class Commande
      * @var DateTime $updated
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -157,6 +160,26 @@ class Commande
             $facture->addLignesfacture($newligne);
         }
         return $facture;
+        
+    }
+
+    public function dupliquer_commande(){
+        $commande = new Commande();
+
+        $commande->setNom($this->getNom()); 
+        $commande->setClient($this->getClient()); 
+        $commande->setStatue($this->getStatue());
+        foreach($this->getLigneCommandes() as $ligne ){
+
+            $newligne = new LigneCommande(); 
+            $newligne->setPrix($ligne->getPrix()); 
+            $newligne->setQte($ligne->getQte()); 
+            $newligne->setService($ligne->getService()); 
+            $newligne->setCommande($commande);
+            $commande->addLigneCommande($newligne);
+
+        }
+        return $commande;
         
     }
 

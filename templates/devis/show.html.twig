@@ -19,7 +19,7 @@
                     {% endif %}
                     <form>
                         <a class="btn btn-primary" type="button" onclick="printDiv('printableArea')" value="print a div!" >Imprimer cette page</a>
-                        <a class="btn btn-outline-primary" href="{{ path('download_file', {'id': devi.id}) }}">telecharger cette page</a>
+                        <a class="btn btn-outline-primary" href="{{ path('telecharger_devis_pdf', {'id': devi.id}) }}">telecharger cette page</a>
                         <a class="btn btn-outline-primary" id='sendemail'  href="{{ path('senddevismail', {'id': devi.id}) }}?mail={{ client_selected.mail }}">Envoyer un mail</a>
                         <a class="btn btn-outline-primary" id='commande'  href="{{ path('convertcommande', {'id': devi.id}) }}?idclient={{ client_selected.id }}">convertire en commande</a>
                     </form>
@@ -84,7 +84,7 @@
                                 <table class="table align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                        <th>Nom service </th>
+                                        <th>Référence </th>
                                         <th>prix </th>
                                         <th>Action</th>
                                         </tr>
@@ -161,7 +161,7 @@
                     </div>
                 </div>
             </div>
-        {# <div class="card border shadow-none bg-warning radius-10">
+         {#<div class="card border shadow-none bg-warning radius-10">
                 <div class="card-body">
                     <h5>Payment info</h5>
                     <div class="d-flex align-items-center gap-3">
@@ -260,7 +260,7 @@
                             <table class="table align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Nom service </th>
+                                        <th>Référence </th>
                                         <th>prix </th>
                                     </tr>
                                 </thead>

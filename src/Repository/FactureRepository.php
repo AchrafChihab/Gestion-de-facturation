@@ -57,8 +57,6 @@ class FactureRepository extends ServiceEntityRepository
 
     public function getCountFactureBy($clientid,$statue_nom){
 
-  
-
         return $this->createQueryBuilder('f')
             ->select('count(f.id)')
             ->Join('f.client','c')
@@ -72,6 +70,38 @@ class FactureRepository extends ServiceEntityRepository
         ;
 
     }
+
+    public function getFactureAnnuler($statue_nom){
+
+          return $this->createQueryBuilder('f')
+            ->Join('f.statue','s')
+            ->AndWhere('s.nom = :statue_nom')
+            ->setParameters(['statue_nom' => $statue_nom])
+            ->getQuery()
+            ->getScalarResult()
+        ;
+
+    }
+
+    public function getAllByDesc()
+    {
+        return $this->createQueryBuilder('F') 
+            ->orderBy('F.createdAt', 'DESC')
+            ->setMaxResults(200)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
+
+    public function getLastesByDesc()
+    {
+        return $this->createQueryBuilder('F') 
+            ->orderBy('F.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
 
 
     // public function findlignefacture($lignefacture)

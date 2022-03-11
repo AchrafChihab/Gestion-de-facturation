@@ -13,7 +13,8 @@
         <thead>
             <tr> 
                 <th>Référence</th>
-                <th>client</th>
+                <th>Client</th>
+                <th>Status</th>
                 <th>Date de création</th>
                 <th>actions</th>
             </tr>
@@ -23,11 +24,13 @@
             <tr> 
                 <td>{{ facture.nom }}</td>
                 <td>{{ facture.client.nom }}</td>
+                <td>{{ facture.statue }}</td>
                 <td>{{ facture.DateFormat }}</td>
 
                 <td>
                     <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('commande_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
                     <a class="text-success p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('commande_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                    <a class="text-success p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dupliquer" aria-label="Views" href="{{ path('dupliquer_commande', {'id': facture.id}) }}"><i class="bi bi-files"></i></a>
                     {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
                 </td>
             </tr>
@@ -38,9 +41,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    
-
-
-
 {% endblock %}

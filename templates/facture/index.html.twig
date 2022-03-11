@@ -28,6 +28,7 @@
                 <td>
                     <a  class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Afficher" aria-label="Views" href="{{ path('facture_show', {'id': facture.id}) }}"><i class="bi bi-eye-fill"></i></a>
                     <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                    <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('dupliquer_facture', {'id': facture.id}) }}"><i class="bi bi-files"></i></a>
                     {# <a class="text-primary p-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Editer" aria-label="Views" href="{{ path('facture_edit', {'id': facture.id}) }}"><i class="bi bi-trash-fill"></i></a> #}
                 </td>
             </tr>
