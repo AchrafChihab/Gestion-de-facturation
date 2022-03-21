@@ -48,6 +48,13 @@
     margin:0 10px;
 }
 
+.datetimehidden{
+    display:none;
+}
+.showinputdate .datetimehidden{
+    display:block;
+}
+
 @media print {
 
     #contenuinitial{

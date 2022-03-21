@@ -40,6 +40,11 @@ class Service
      */
     private $lignedevis;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $type;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -155,6 +160,18 @@ class Service
                 $lignedevi->setService(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?bool
+    {
+        return $this->type;
+    }
+
+    public function setType(bool $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

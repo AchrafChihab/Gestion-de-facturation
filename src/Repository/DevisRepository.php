@@ -100,6 +100,23 @@ class DevisRepository extends ServiceEntityRepository
 
   }
 
+  
+  // Function to find the difference 
+  // between two dates.
+  function dateDiffInDays($datede, $datea) 
+  {
+      // Calculating the difference in timestamps
+      $diff = strtotime($datea) - strtotime($datede);
+  
+      // 1 day = 24 hours
+      // 24 * 60 * 60 = 86400 seconds
+      return abs(round($diff / 86400));
+
+  }
+  
+
+
+
     public function getDevisAnnuler($statue_nom){
 
         return $this->createQueryBuilder('D')

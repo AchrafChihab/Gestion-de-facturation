@@ -2,27 +2,33 @@
 
 {% block title %}Créer un devis{% endblock %}
 {% macro niceForme(form) %}
-        <div class="row itemservice">
-            <div class="col-md-4">
+    <div class="row itemservice">
+        <div class="col-md-4 servicetype" >
             {{ form_row(form.service) }}
-            </div>
-            <div class="col-md-1">
-             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    +
-                </button>
-            </div>
-
-            <div class="col-md-2">
-                {{ form_row(form.qte) }}
-            </div>
-            <div class="col-md-2">
-            {{ form_row(form.prix) }}
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-danger btn-remove"  type="button">Supprimer</button>
-            </div>
         </div>
+        <div class="col-md-1">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                +
+            </button>
+        </div> 
+
+        <div class="col-md-2">
+            {{ form_row(form.qte) }}
+        </div>
+        <div class="col-md-2">
+        {{ form_row(form.prix) }}
+        </div>
+        <div class="col-md-4 datetimehidden ">
+        {{ form_row(form.datede) }}
+        </div>
+        <div class="col-md-4 datetimehidden ">
+        {{ form_row(form.datea) }}
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-danger btn-remove"  type="button">Supprimer</button>
+        </div>
+    </div>
 {% endmacro niceForme %}
 {% import _self as formMacros %}
 
@@ -55,28 +61,28 @@
         </div>
     </div>
     {# {{ form_widget(form) }} #}
-{{ form_end(form) }}    
+{{ form_end(form) }} 
   
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau service</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-        {{ render(url('service_new_ajax')) }}
-    </div>
-    <div class="modal-footer text-left">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-    </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ render(url('service_new_ajax')) }}
+            </div>
+            <div class="modal-footer text-left">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
 </div>
-</div>
-<script>
-    
 
+<div id="routeservicetype" data-route="{{ path('getservicetype') }}"></div>
+<script>
   $(document).ready(function () 
   {
     $("#serviceform").submit(function (event)

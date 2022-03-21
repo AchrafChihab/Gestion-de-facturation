@@ -85,15 +85,21 @@
                                     <thead class="table-light">
                                         <tr>
                                         <th>Référence </th>
-                                        <th>prix </th>
+                                        <th>Date debut </th>
+                                        <th>Date fin </th>
+                                        <th>Prix </th>
                                         <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% set total = 0   %} 
+                                        
                                         {% for lignedevi in devi.lignedevis %}
                                             <tr> 
                                                 <td>{{ lignedevi.service }}</td>
+                                                <td>{{ lignedevi.DateFormatDebut }}</td>                                                
+                                                {# <td>{{ lignedevi.datede|date("m/d/Y") }}</td> #}
+                                                <td>{{ lignedevi.DateFormatFin }}</td>
                                                 <td>{{ lignedevi.prix }}</td>
                                                 <td>
                                                     {# <a href="{{ path('devi_show', {'id': devi.id}) }}">show</a> #}
@@ -112,9 +118,11 @@
                                                 {% set  taxes = (total * 20) / 100  %}
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="text-end">total</td>
+                                            <td colspan="3" class="text-end">total</td>
                                             <td >{{ total }}</td>
                                         </tr>
+
+                                        
                                         
                                     </tbody>
                                 </table>

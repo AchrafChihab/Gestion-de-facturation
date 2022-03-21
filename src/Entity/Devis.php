@@ -193,6 +193,7 @@ class Devis
 
 
 
+
     
     public function depluc(){ 
         $devi = new Devis(); 
