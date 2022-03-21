@@ -6,6 +6,7 @@ use App\Entity\Lignedevis;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class LignedevisType extends AbstractType
 {
@@ -14,8 +15,11 @@ class LignedevisType extends AbstractType
         $builder
             ->add('qte')
             ->add('prix')
+            ->add('datede', DateTimeType::class, [ 'date_label' => 'date debut ',])
+            ->add('datea', DateTimeType::class, [ 'date_label' => 'date fin',])
             ->add('service',null, [
-                'attr' => ['class' => 'choise_service']]);
+                'attr' => ['class' => 'choise_service',
+                            'onchange'=> 'getComboA(this)']]);
         ;
     }
 

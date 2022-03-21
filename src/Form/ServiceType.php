@@ -13,6 +13,7 @@ class ServiceType extends AbstractType
     {
         $builder
             ->add('nom')
+            ->add('type')
         ;
     }
 

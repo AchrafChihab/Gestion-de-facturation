@@ -19,10 +19,6 @@ class Lignefacture
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Statue::class, inversedBy="lignefactures")
-     */
-    private $statue;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -55,17 +51,6 @@ class Lignefacture
     }
 
 
-    public function getStatue(): ?statue
-    {
-        return $this->statue;
-    }
-
-    public function setStatue(?statue $statue): self
-    {
-        $this->statue = $statue;
-
-        return $this;
-    }
 
     public function getQte(): ?string
     {

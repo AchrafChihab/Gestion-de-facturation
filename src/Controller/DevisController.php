@@ -12,6 +12,7 @@ use App\Entity\Lignedevis;
 use App\Repository\DevisRepository;
 use App\Repository\ClientsRepository;
 use App\Repository\FactureRepository;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class DevisController extends AbstractController
     */
     public function index(DevisRepository $devisRepository): Response
     {
+              
         return $this->render('devis/index.html.twig', [
             'devis' => $devisRepository->getDevis('expedier'),
         ]);
@@ -117,11 +119,15 @@ class DevisController extends AbstractController
     /**
      * @Route("/new", name="devis_new", methods={"GET", "POST"})
     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, ServiceRepository $ServiceRepository, EntityManagerInterface $entityManager): Response
     {
+        $typeservice = $ServiceRepository->findAll();
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
+
+
         $form->handleRequest($request);
+        
            
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($devi);
@@ -133,6 +139,7 @@ class DevisController extends AbstractController
 
         return $this->renderForm('devis/new.html.twig', [
             'devi' => $devi,
+            'typeservice' => $typeservice,
             'form' => $form,
         ]);
     }

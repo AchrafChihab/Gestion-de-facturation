@@ -4,26 +4,33 @@
 
 
     {% macro niceForme(form) %}
-        <div class="row">
-            <div class="col-md-5">
+    <div class="row itemservice">
+        <div class="col-md-4 " >
             {{ form_row(form.service) }}
-            </div>
-            <div class="col-md-1">
-             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    +
-                </button>
-            </div>
-            <div class="col-md-2">
-                {{ form_row(form.qte) }}
-            </div>
-            <div class="col-md-2">
-            {{ form_row(form.prix) }}
-            </div>
-            <div class="col-md-2">            
-                <button class="btn btn-danger btn-remove"   type="button">Supprimer</button>
-            </div>
         </div>
+        <div class="col-md-1">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary m-2 add_item_link" data-collection-holder-class="lignesfacture_contenu" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                +
+            </button>
+        </div> 
+
+        <div class="col-md-2">
+            {{ form_row(form.qte) }}
+        </div>
+        <div class="col-md-2">
+        {{ form_row(form.prix) }}
+        </div>
+        <div class="col-md-4  ">
+        {{ form_row(form.datede) }}
+        </div>
+        <div class="col-md-4  ">
+        {{ form_row(form.datea) }}
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-danger btn-remove"  type="button">Supprimer</button>
+        </div>
+    </div>
      {% endmacro niceForme %}
      
 {% block body %}

@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\LignedevisRepository;
+use App\Outil\Outil;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LignedevisRepository;
 
 /**
  * @ORM\Entity(repositoryClass=LignedevisRepository::class)
@@ -17,10 +18,6 @@ class Lignedevis
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Statue::class, inversedBy="lignedevis")
-     */
-    private $statue;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,21 +39,19 @@ class Lignedevis
      */
     private $devis;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $datede;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $datea;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStatue(): ?Statue
-    {
-        return $this->statue;
-    }
-
-    public function setStatue(?Statue $statue): self
-    {
-        $this->statue = $statue;
-
-        return $this;
     }
 
     public function getQte(): ?string
@@ -105,5 +100,36 @@ class Lignedevis
         $this->devis = $devis;
 
         return $this;
+    }
+
+    public function getDateDe(): ?\DateTimeInterface
+    {
+        return $this->datede;
+    }
+
+    public function setDateDe(?\DateTimeInterface $datede): self
+    {
+        $this->datede = $datede;
+
+        return $this;
+    }
+
+    public function getDateA(): ?\DateTimeInterface
+    {
+        return $this->datea;
+    }
+
+    public function setDateA(?\DateTimeInterface $datea): self
+    {
+        $this->datea = $datea;
+
+        return $this;
+    }
+
+    public function getDateFormatDebut(){
+        return Outil::getDateFormatingsansday($this->datede->format('Y-m-d')); 
+    }
+    public function getDateFormatFin(){
+        return Outil::getDateFormatingsansday($this->datea->format('Y-m-d'));       
     }
 }

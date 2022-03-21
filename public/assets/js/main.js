@@ -54,5 +54,30 @@ document
   }); 
 
 
+   // add date time  
+
+
+    function getComboA(serviceelement) {
+      var valueee = serviceelement.value;  
+      // console.log( Boolean(valueee));
+      console.log(valueee);
+      $.ajax({
+        url:$('#routeservicetype').data('route'),
+        type: "POST",
+        data:{'service': valueee},
+        async: true,
+        encode: true,
+        success: function (data)
+        {
+          if( data == true){
+            $(serviceelement).parent().parent().parent().parent().addClass('showinputdate');
+          }else{
+            $(serviceelement).parent().parent().parent().parent().removeClass('showinputdate');
+          }
+        }
+    });
+    }
+
+
 
 

@@ -124,4 +124,23 @@ class ServiceController extends AbstractController
         ]);
         
     }
+
+    
+    /**
+     * @Route("/getservicetype/new-ajax", name="getservicetype", methods={"GET", "POST"})
+     */
+    public function getservicetype(Request $request,ServiceRepository $serviceRepository): Response
+    {
+
+        $service_id = $request->request->get('service');  // service
+        $service = $serviceRepository->findOneBy(['id' => $service_id]);
+        if($service){
+            return new Response($service->getType());
+        }
+
+        return new Response(null);
+
+        
+    }
+
 }
